@@ -27,7 +27,7 @@ const PostList = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/posts");
+        const response = await axios.get("https://mern-blog-client-721e37b2ed1d.herokuapp.com/posts");
         setPosts(response.data);
       } catch (error) {
         console.error("Error fetching posts:", error);
@@ -41,7 +41,7 @@ const PostList = () => {
     e.stopPropagation();
     const token = localStorage.getItem("token");
     try {
-      await axios.delete(`http://localhost:5000/posts/${id}`, {
+      await axios.delete(`https://mern-blog-client-721e37b2ed1d.herokuapp.com/posts/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -88,7 +88,7 @@ const PostList = () => {
           >
             {post.image && (
               <img
-                src={`http://localhost:5000/uploads/${post.image}`}
+                src={`https://mern-blog-client-721e37b2ed1d.herokuapp.com/uploads/${post.image}`}
                 alt={post.title}
                 className="card-img-top post-image"
               />
@@ -147,7 +147,7 @@ const PostList = () => {
               }}
             >
               <img
-                src={`http://localhost:5000/uploads/${selectedPost.image}`}
+                src={`https://mern-blog-client-721e37b2ed1d.herokuapp.com/uploads/${selectedPost.image}`}
                 alt={selectedPost.title}
                 className="post-image"
               />

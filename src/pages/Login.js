@@ -16,7 +16,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:5000/auth/login', {
+      const response = await axios.post('https://mern-blog-client-721e37b2ed1d.herokuapp.com/auth/login', {
         username,
         password
       });

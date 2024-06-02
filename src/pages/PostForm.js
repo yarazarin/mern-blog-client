@@ -46,7 +46,7 @@ const PostForm = () => {
         const token = localStorage.getItem("token");
         try {
           const response = await axios.get(
-            `http://localhost:5000/posts/${id}`,
+            `https://mern-blog-client-721e37b2ed1d.herokuapp.com/posts/${id}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -78,8 +78,8 @@ const PostForm = () => {
 
     try {
       const url = id
-        ? `http://localhost:5000/posts/${id}`
-        : "http://localhost:5000/posts";
+        ? `https://mern-blog-client-721e37b2ed1d.herokuapp.com/posts/${id}`
+        : "https://mern-blog-client-721e37b2ed1d.herokuapp.com/posts";
       const method = id ? "put" : "post";
       const response = await axios({
         method,
