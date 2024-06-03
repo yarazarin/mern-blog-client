@@ -27,7 +27,7 @@ const PostList = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get("https://mern-blog-server.herokuapp.com/posts");
+        const response = await axios.get("https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/posts");
         setPosts(response.data);
       } catch (error) {
         console.error("Error fetching posts:", error);
