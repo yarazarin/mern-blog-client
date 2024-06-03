@@ -41,7 +41,7 @@ const PostList = () => {
     e.stopPropagation();
     const token = localStorage.getItem("token");
     try {
-      await axios.delete(`https://mern-blog-server.herokuapp.com/posts/${id}`, {
+      await axios.delete(`https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/posts/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -88,7 +88,7 @@ const PostList = () => {
           >
             {post.image && (
               <img
-                src={`https://mern-blog-server.herokuapp.com/uploads/${post.image}`}
+                src={`https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/uploads/${post.image}`}
                 alt={post.title}
                 className="card-img-top post-image"
               />
@@ -147,7 +147,7 @@ const PostList = () => {
               }}
             >
               <img
-                src={`https://mern-blog-server.herokuapp.com/uploads/${selectedPost.image}`}
+                src={`https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/uploads/${selectedPost.image}`}
                 alt={selectedPost.title}
                 className="post-image"
               />
