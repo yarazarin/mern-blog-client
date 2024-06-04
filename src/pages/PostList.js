@@ -87,13 +87,14 @@ const PostList = () => {
       <div className="row">
         <div className="col-md-4 col-lg-3 mb-4">
           <div className="list-group">
+            <caption className="post-list_header">Posts</caption>
             {posts.filter(searchFilter).map((post) => (
               <button
                 key={post._id}
                 onClick={() => handleShow(post)}
                 className="list-group-item list-group-item-action"
               >
-                {truncate(post.title, 30)}
+                {truncate(post.title, 20)}
               </button>
             ))}
           </div>

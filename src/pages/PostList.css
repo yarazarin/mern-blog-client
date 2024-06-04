@@ -52,6 +52,10 @@
   }
 }
 
+.post-list_header{
+  color: #888;
+  text-shadow: #ffffff 1px 1px 1px;
+}
 .post-card:hover {
   animation: shake 0.5s;
   animation-iteration-count: 0.4;
