@@ -1,9 +1,9 @@
-//client/src/pages/PostList.js
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import { format } from "date-fns";
 import "./PostList.css";
 
 function isPersian(str) {
@@ -11,8 +11,8 @@ function isPersian(str) {
   return persianRegex.test(str);
 }
 
-function truncate(str, no_words) {
-  return str.split(" ").splice(0, no_words).join(" ");
+function truncate(str, no_chars) {
+  return str.length > no_chars ? str.substring(0, no_chars) + "..." : str;
 }
 
 const PostList = () => {
@@ -27,7 +27,9 @@ const PostList = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get("https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/posts");
+        const response = await axios.get(
+          "https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/posts"
+        );
         setPosts(response.data);
       } catch (error) {
         console.error("Error fetching posts:", error);
@@ -41,11 +43,14 @@ const PostList = () => {
     e.stopPropagation();
     const token = localStorage.getItem("token");
     try {
-      await axios.delete(`https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/posts/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await axios.delete(
+        `https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/posts/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       setPosts(posts.filter((post) => post._id !== id));
     } catch (err) {
       console.error("Error deleting post:", err);
@@ -64,103 +69,123 @@ const PostList = () => {
 
   return (
     <div className="container">
-      <h2 className="text-center my-4">Welcome to my Blog</h2>
+      <h2 className="text-center my-4 welcome-title">Welcome to my Blog</h2>
       <div className="input-group mb-3">
         <input
           type="text"
-          className="form-control"
+          className="form-control card-search"
           placeholder="Search..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         <div className="input-group-append">
-          <button className="btn btn-outline-secondary" type="button">
+          <button className="btn btn-outline-secondary btn-search" type="button">
             <i className="fa fa-search"></i>
           </button>
         </div>
       </div>
-      <div className="card-deck">
-        {posts.filter(searchFilter).map((post) => (
-          <div
-            key={post._id}
-            className="card mb-4"
-            onClick={() => handleShow(post)}
-          >
-            {post.image && (
-              <img
-                src={`https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/uploads/${post.image}`}
-                alt={post.title}
-                className="card-img-top post-image"
-              />
-            )}
-            <div
-              className="card-body"
-              style={{ direction: isPersian(post.content) ? "rtl" : "ltr" }}
-            >
-              <h5 className="card-title">{post.title}</h5>
-              <div
-                className="card-text"
-                dangerouslySetInnerHTML={{
-                  __html: truncate(post.content, 5) + "...",
-                }}
-              ></div>
-              {isAuth && (
-                <>
-                  <Link to={`/edit/${post._id}`} className="btn btn-primary">
-                    Edit
-                  </Link>
-                  <button
-                    onClick={(e) => handleDelete(post._id, e)}
-                    className="btn btn-danger"
-                  >
-                    Delete
-                  </button>
-                </>
-              )}
-            </div>
+      <div className="row">
+        <div className="col-md-4 col-lg-3 mb-4">
+          <div className="list-group">
+            {posts.filter(searchFilter).map((post) => (
+              <button
+                key={post._id}
+                onClick={() => handleShow(post)}
+                className="list-group-item list-group-item-action"
+              >
+                {truncate(post.title, 30)}
+              </button>
+            ))}
           </div>
-        ))}
+        </div>
+        <div className="col-md-8 col-lg-9">
+          <div className="row">
+            {posts.filter(searchFilter).map((post) => (
+              <div
+                key={post._id}
+                className="col-md-6 col-lg-4 mb-4"
+                onClick={() => handleShow(post)}
+              >
+                <div className="card h-100 shadow-sm post-card">
+                  {post.image && (
+                    <img
+                      src={`https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/uploads/${post.image}`}
+                      alt={post.title}
+                      className="card-img-top post-image"
+                    />
+                  )}
+                  <div
+                    className="card-body"
+                    style={{ direction: isPersian(post.content) ? "rtl" : "ltr" }}
+                  >
+                    <h5 className="card-title">{post.title}</h5>
+                    <div className="card-text">
+                      <p
+                        className="truncate"
+                        dangerouslySetInnerHTML={{
+                          __html: truncate(post.content, 20) + "...",
+                        }}
+                      ></p>
+                      <p className="card-subtitle mb-2 text-muted date-text">
+                        {format(new Date(post.createdAt), "PPpp")}
+                      </p>
+                    </div>
+                    {isAuth && (
+                      <div className="d-flex justify-content-between mt-2">
+                        <Link to={`/edit/${post._id}`} className="btn btn-primary">
+                          Edit
+                        </Link>
+                        <button
+                          onClick={(e) => handleDelete(post._id, e)}
+                          className="btn btn-danger"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
-      <Modal show={selectedPost !== null} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title
-            style={{
-              direction:
-                selectedPost && isPersian(selectedPost.title) ? "rtl" : "ltr",
-            }}
-          >
-            {selectedPost?.title}
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body
-          style={{
-            direction:
-              selectedPost && isPersian(selectedPost.content) ? "rtl" : "ltr",
-          }}
-        >
-          {selectedPost?.image && (
-            <div
+      {selectedPost && (
+        <Modal show={true} onHide={handleClose} dialogClassName="custom-modal-size">
+          <Modal.Header closeButton>
+            <Modal.Title
               style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
+                direction: isPersian(selectedPost.title) ? "rtl" : "ltr",
               }}
             >
-              <img
-                src={`https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/uploads/${selectedPost.image}`}
-                alt={selectedPost.title}
-                className="post-image"
-              />
-            </div>
-          )}
-          <div dangerouslySetInnerHTML={{ __html: selectedPost?.content }}></div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
+              {selectedPost.title}
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body
+            style={{
+              direction: isPersian(selectedPost.content) ? "rtl" : "ltr",
+            }}
+          >
+            {selectedPost.image && (
+              <div className="text-center mb-3">
+                <img
+                  src={`https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/uploads/${selectedPost.image}`}
+                  alt={selectedPost.title}
+                  className="post-image"
+                />
+              </div>
+            )}
+            <div
+              dangerouslySetInnerHTML={{ __html: selectedPost.content }}
+            ></div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
     </div>
   );
 };
