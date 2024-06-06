@@ -67,6 +67,20 @@ const PostList = () => {
     );
   };
 
+  const handleShare = (postId) => {
+    const url = `${window.location.origin}/posts/${postId}`;
+    if (navigator.share) {
+      navigator.share({
+        title: "Check out this post",
+        url: url,
+      }).catch((error) => console.error("Error sharing", error));
+    } else {
+      navigator.clipboard.writeText(url).then(() => {
+        alert("Link copied to clipboard!");
+      });
+    }
+  };
+
   return (
     <div className="container">
       <h2 className="text-center my-4 welcome-title">Welcome to my Blog</h2>
@@ -183,6 +197,9 @@ const PostList = () => {
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
               Close
+            </Button>
+            <Button variant="primary" onClick={() => handleShare(selectedPost._id)}>
+              Share
             </Button>
           </Modal.Footer>
         </Modal>
