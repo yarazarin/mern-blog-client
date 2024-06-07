@@ -6,12 +6,6 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "./PostForm.css";
 
-let Font = ReactQuill.Quill.import("formats/font");
-// Add 'dast' and 'ava' to the whitelist
-Font.whitelist = ["sans-serif", "vazir", "Times", "dast", "ava", "nastaliq"];
-// Register the updated 'font' format
-ReactQuill.Quill.register(Font, true);
-
 const toolbarOptions = [
   ["bold", "italic", "underline", "strike"], // toggled buttons
   ["blockquote", "code-block"],
@@ -36,6 +30,7 @@ const PostForm = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
+  const [imageUrl, setImageUrl] = useState(""); // Add this state
   const [error, setError] = useState("");
   const { id } = useParams();
   const navigate = useNavigate();
@@ -55,6 +50,7 @@ const PostForm = () => {
           );
           setTitle(response.data.title);
           setContent(response.data.content);
+          setImageUrl(response.data.imageUrl); // Add this line
         } catch (err) {
           console.error("Error fetching post data:", err);
           setError("Error fetching post data");
@@ -75,6 +71,7 @@ const PostForm = () => {
     if (image) {
       formData.append("image", image);
     }
+    formData.append("imageUrl", imageUrl); // Add this line
 
     try {
       const url = id
@@ -94,6 +91,7 @@ const PostForm = () => {
       setTitle("");
       setContent("");
       setImage(null);
+      setImageUrl(""); // Add this line
       alert("Post created/updated successfully");
       navigate("/");
     } catch (err) {
@@ -129,6 +127,15 @@ const PostForm = () => {
             type="file"
             className="form-control"
             onChange={(e) => setImage(e.target.files[0])}
+          />
+        </div>
+        <div className="form-group"> {/* Add this block */}
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Image URL"
+            value={imageUrl}
+            onChange={(e) => setImageUrl(e.target.value)}
           />
         </div>
         <button type="submit" className="btn btn-primary">
