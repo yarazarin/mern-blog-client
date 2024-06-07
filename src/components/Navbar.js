@@ -1,6 +1,6 @@
 //client/src/components/Navbar.js
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Navbar, Nav } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,7 +17,7 @@ const Navigation = () => {
 
   return (
     <Navbar bg="none" expand="lg" className="justify-content-between px-3">
-      <Navbar.Brand href="/myblog">
+      <Navbar.Brand as={NavLink} to="/myblog">
         <FontAwesomeIcon icon={faBlog} /> My Blog
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -32,8 +32,8 @@ const Navigation = () => {
             My Blog
           </Nav.Link>
           {!isAuth ? (
-            <Nav.Link as={NavLink} to="https://yarazarin.github.io/itisyara">
-              Go To Website
+            <Nav.Link href="https://yarazarin.github.io/itisyara">
+              Website
             </Nav.Link>
           ) : (
             <Nav.Link onClick={handleLogout}>Logout</Nav.Link>

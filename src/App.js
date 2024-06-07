@@ -11,7 +11,7 @@ import "./App.css";
 
 function App() {
   return (
-    <Router>
+    <Router basename="/mern-blog-client">
       <div className="App">
         <Navbar />
         <Routes>
