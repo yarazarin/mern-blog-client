@@ -12,6 +12,7 @@ const PostDetail = () => {
     const fetchPost = async () => {
       try {
         const response = await axios.get(`https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/posts/${id}`);
+        console.log(response.data); // Log the response to verify
         setPost(response.data);
       } catch (error) {
         console.error('Error fetching the post:', error);
@@ -35,7 +36,7 @@ const PostDetail = () => {
       <h1>{post.title}</h1>
       <div dangerouslySetInnerHTML={{ __html: post.content }} />
       {post.image && <img src={`https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/uploads/${post.image}`} alt={post.title} />}
-      {post.imageUrl && <img src={post.imageUrl} alt={post.title} />}
+      {post.imageUrl && <img src={post.imageUrl} alt={post.title} />} {/* Ensure this line is correct */}
     </div>
   );
 };
