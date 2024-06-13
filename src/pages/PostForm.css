@@ -1,3 +1,5 @@
+
+
 @font-face {
   font-family: 'vazir';
   src: url('../fonts/Vazir-Regular.ttf') format('truetype');
@@ -70,3 +72,7 @@
 .ql-font-ava {
   font-family: 'nastaliq';
 }
+
+.content-container {
+  height: 150px;
+  }

@@ -103,40 +103,47 @@ const PostForm = () => {
   };
 
   return (
-    <div className="container">
-      <h2 className="text-center">{id ? "Edit Post" : "Create Post"}</h2>
+    <div className="container mt-5">
+      <h2 className="text-center mb-4">{id ? "Edit Post" : "Create Post"}</h2>
       {error && <div className="alert alert-danger">{error}</div>}
       <form onSubmit={handleSubmit}>
         <div className="form-group">
+          <label htmlFor="title">Title</label>
           <input
             type="text"
+            id="title"
             className="form-control"
-            placeholder="Title"
+            placeholder="Enter title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
           />
         </div>
         <div className="form-group">
+          
+          <label htmlFor="content">Content</label>
           <ReactQuill
+            id="content"
             value={content}
             onChange={setContent}
             modules={{ toolbar: toolbarOptions }}
+            className="mb-3 bg-white content-container"
           />
         </div>
         <div className="form-group">
+          <label htmlFor="image">Image</label>
           <input
             type="file"
-            className="form-control"
+            id="image"
+            className="form-control-file"
             onChange={(e) => setImage(e.target.files[0])}
           />
         </div>
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-primary mt-3 mb-5">
           {id ? "Update Post" : "Create Post"}
         </button>
       </form>
     </div>
   );
-};
-
+}
 export default PostForm;
