@@ -1,4 +1,5 @@
-// client/src/App.js
+//client/src/App.js
+import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import PostList from "./pages/PostList";
 import PostForm from "./pages/PostForm";
@@ -16,11 +17,12 @@ function App() {
         <Routes>
           <Route path="/posts/:id" element={<PostDetail />} />
           <Route path="/login" element={<Login />} />
-          <PrivateRoute path="/myblog" element={<PostList />} />
-          <PrivateRoute path="/">
+          <Route path="/myblog" element={<PostList />} />
+          <Route path="/" element={<PrivateRoute />}>
+            <Route path="/" element={<PostList />} />
             <Route path="/new" element={<PostForm />} />
             <Route path="/edit/:id" element={<PostForm />} />
-          </PrivateRoute>
+          </Route>
         </Routes>
       </div>
     </Router>
