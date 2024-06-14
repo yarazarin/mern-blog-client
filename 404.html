@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta http-equiv="refresh" content="0; URL=./index.html" />
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Page Not Found</title>
-  </head>
-  <body>
     <script type="text/javascript">
-      // Redirect all 404 errors to index.html
-      window.location.href = '/mern-blog-client/';
+      // Preserve the path and query string
+      var redirectUrl = window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '') + '/mern-blog-client/' + window.location.pathname.replace('/mern-blog-client', '') + window.location.search;
+      window.location.replace(redirectUrl);
     </script>
-  </body>
+  </head>
+  <body></body>
 </html>
