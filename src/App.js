@@ -18,7 +18,6 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/myblog" element={<PostList />} />
           <Route path="/" element={<PrivateRoute />}>
-            <Route path="/" element={<PostList />} />
             <Route path="/new" element={<PostForm />} />
             <Route path="/edit/:id" element={<PostForm />} />
           </Route>
