@@ -1,4 +1,4 @@
-//src/pages/PostForm.js
+// src/pages/PostForm.js
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -46,7 +46,7 @@ const PostForm = () => {
         const token = localStorage.getItem("token");
         try {
           const response = await axios.get(
-            `https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/posts/${id}`,
+            `https://your-api-server/posts/${id}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -68,7 +68,7 @@ const PostForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
-
+  
     const formData = new FormData();
     formData.append("title", title);
     formData.append("content", content);
@@ -100,7 +100,6 @@ const PostForm = () => {
       console.error("Error posting data:", err);
       setError("Request failed");
     }
-  };
 
   return (
     <div className="container mt-5">
