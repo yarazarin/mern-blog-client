@@ -58,15 +58,16 @@ const PostForm = () => {
     fetchPost();
   }, [id]);
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
-
+  
     let imageUrl = "";
     if (image) {
       const formData = new FormData();
       formData.append("file", image);
-
+  
       try {
         const uploadResponse = await axios.post(
           "https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/upload",
@@ -84,7 +85,7 @@ const PostForm = () => {
         return;
       }
     }
-
+  
     try {
       const url = id
         ? `https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/posts/${id}`
@@ -113,6 +114,7 @@ const PostForm = () => {
       setError("Request failed");
     }
   };
+  
 
   return (
     <div className="container mt-5">
