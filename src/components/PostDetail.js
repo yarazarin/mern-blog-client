@@ -1,3 +1,4 @@
+//client/src/components/PostDetail.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
@@ -33,7 +34,7 @@ const PostDetail = () => {
     <div>
       <h1>{post.title}</h1>
       <div dangerouslySetInnerHTML={{ __html: post.content }} />
-      {post.image && <img src={post.image} alt={post.title} />}
+      {post.image && <img src={`https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/uploads/${post.image}`} alt={post.title} />}
     </div>
   );
 };

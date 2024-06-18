@@ -1,3 +1,4 @@
+//src/pages/PostForm.js
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -119,6 +120,7 @@ const PostForm = () => {
           />
         </div>
         <div className="form-group">
+          
           <label htmlFor="content">Content</label>
           <ReactQuill
             id="content"
@@ -143,6 +145,5 @@ const PostForm = () => {
       </form>
     </div>
   );
-};
-
+}
 export default PostForm;
