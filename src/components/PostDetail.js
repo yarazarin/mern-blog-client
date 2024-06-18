@@ -11,7 +11,7 @@ const PostDetail = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await axios.get(`https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/posts/${id}`);
+        const response = await axios.get(`https://yarazarin.github.io/mern-blog-client/posts/${id}`);
         setPost(response.data);
       } catch (error) {
         console.error('Error fetching the post:', error);
@@ -34,7 +34,7 @@ const PostDetail = () => {
     <div>
       <h1>{post.title}</h1>
       <div dangerouslySetInnerHTML={{ __html: post.content }} />
-      {post.image && <img src={`https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/uploads/${post.image}`} alt={post.title} />}
+      {post.image && <img src={`https://yarazarin.github.io/mern-blog-client/uploads/${post.image}`} alt={post.title} />}
     </div>
   );
 };

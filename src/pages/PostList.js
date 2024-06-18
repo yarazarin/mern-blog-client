@@ -29,7 +29,7 @@ const PostList = () => {
     const fetchPosts = async () => {
       try {
         const response = await axios.get(
-          "https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/posts"
+          "https://yarazarin.github.io/mern-blog-client/posts"
         );
         setPosts(response.data);
       } catch (error) {
@@ -45,7 +45,7 @@ const PostList = () => {
     const token = localStorage.getItem("token");
     try {
       await axios.delete(
-        `https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/posts/${id}`,
+        `https://yarazarin.github.io/mern-blog-client/posts/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -125,7 +125,7 @@ const PostList = () => {
                 <div className="card h-100 shadow-sm post-card">
                   {post.image && (
                     <img
-                      src={`https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/uploads/${post.image}`}
+                      src={`https://yarazarin.github.io/mern-blog-client/uploads/${post.image}`}
                       alt={post.title}
                       className="card-img-top post-image"
                     />
@@ -185,7 +185,7 @@ const PostList = () => {
             {selectedPost.image && (
               <div className="text-center mb-3">
                 <img
-                  src={`https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/uploads/${selectedPost.image}`}
+                  src={`https://yarazarin.github.io/mern-blog-client/uploads/${selectedPost.image}`}
                   alt={selectedPost.title}
                   className="post-image"
                 />
