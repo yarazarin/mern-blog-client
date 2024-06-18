@@ -1,3 +1,5 @@
+//src/pages/PostForm.js
+
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -70,7 +72,7 @@ const PostForm = () => {
   
       try {
         const uploadResponse = await axios.post(
-          "https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/upload",
+          "https://github.com/yarazarin/mern-blog-server/upload",
           formData,
           {
             headers: {
@@ -81,7 +83,7 @@ const PostForm = () => {
         imageUrl = uploadResponse.data.url;
       } catch (err) {
         console.error("Error uploading image:", err);
-        setError("Image upload failed");
+        setError("Request failed: " + err.message);
         return;
       }
     }
