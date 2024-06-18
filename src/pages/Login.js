@@ -1,4 +1,3 @@
-// src/pages/Login.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -16,7 +15,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post('https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/login', {
+      const response = await axios.post('https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/auth/login', {
         username,
         password
       });
