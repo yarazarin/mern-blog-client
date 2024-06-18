@@ -1,5 +1,4 @@
 //src/pages/PostForm.js
-
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -8,23 +7,29 @@ import "react-quill/dist/quill.snow.css";
 import "./PostForm.css";
 
 let Font = ReactQuill.Quill.import("formats/font");
+// Add 'dast' and 'ava' to the whitelist
 Font.whitelist = ["sans-serif", "vazir", "Times", "dast", "ava", "nastaliq"];
+// Register the updated 'font' format
 ReactQuill.Quill.register(Font, true);
 
 const toolbarOptions = [
-  ["bold", "italic", "underline", "strike"],
+  ["bold", "italic", "underline", "strike"], // toggled buttons
   ["blockquote", "code-block"],
-  [{ header: 1 }, { header: 2 }],
+
+  [{ header: 1 }, { header: 2 }], // custom button values
   [{ list: "ordered" }, { list: "bullet" }],
-  [{ script: "sub" }, { script: "super" }],
-  [{ indent: "-1" }, { indent: "+1" }],
-  [{ direction: "rtl" }],
-  [{ size: ["small", false, "large", "huge"] }],
+  [{ script: "sub" }, { script: "super" }], // superscript/subscript
+  [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
+  [{ direction: "rtl" }], // text direction
+
+  [{ size: ["small", false, "large", "huge"] }], // custom dropdown
   [{ header: [1, 2, 3, 4, 5, 6, false] }],
-  [{ color: [] }, { background: [] }],
+
+  [{ color: [] }, { background: [] }], // dropdown with defaults from theme
   [{ font: ["sans-serif", "vazir", "Times", "dast", "ava", "nastaliq"] }],
   [{ align: [] }],
-  ["clean"],
+
+  ["clean"], // remove formatting button
 ];
 
 const PostForm = () => {
@@ -60,34 +65,17 @@ const PostForm = () => {
     fetchPost();
   }, [id]);
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
-  
-    let imageUrl = "";
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("content", content);
     if (image) {
-      const formData = new FormData();
-      formData.append("file", image);
-  
-      try {
-        const uploadResponse = await axios.post(
-          "https://github.com/yarazarin/mern-blog-server/upload",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-        imageUrl = uploadResponse.data.url;
-      } catch (err) {
-        console.error("Error uploading image:", err);
-        setError("Request failed: " + err.message);
-        return;
-      }
+      formData.append("image", image);
     }
-  
+
     try {
       const url = id
         ? `https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/posts/${id}`
@@ -96,13 +84,10 @@ const PostForm = () => {
       const response = await axios({
         method,
         url,
-        data: {
-          title,
-          content,
-          imageUrl, // Include the image URL in the post data
-        },
+        data: formData,
         headers: {
           Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
         },
       });
       console.log("Post successful:", response.data);
@@ -116,7 +101,6 @@ const PostForm = () => {
       setError("Request failed");
     }
   };
-  
 
   return (
     <div className="container mt-5">
@@ -136,6 +120,7 @@ const PostForm = () => {
           />
         </div>
         <div className="form-group">
+          
           <label htmlFor="content">Content</label>
           <ReactQuill
             id="content"
@@ -160,6 +145,5 @@ const PostForm = () => {
       </form>
     </div>
   );
-};
-
+}
 export default PostForm;
