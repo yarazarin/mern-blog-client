@@ -34,7 +34,7 @@ const PostDetail = () => {
     <div>
       <h1>{post.title}</h1>
       <div dangerouslySetInnerHTML={{ __html: post.content }} />
-      {post.image && <img src={`https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/uploads/${post.image}`} alt={post.title} />}
+      {post.image && <img src={`https://github.com/yarazarin/mern-blog-server/upload${post.image}`} alt={post.title} />}
     </div>
   );
 };

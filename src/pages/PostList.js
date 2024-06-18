@@ -125,7 +125,7 @@ const PostList = () => {
                 <div className="card h-100 shadow-sm post-card">
                   {post.image && (
                     <img
-                      src={`https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/uploads/${post.image}`}
+                      src={`https://github.com/yarazarin/mern-blog-server/${post.image}`}
                       alt={post.title}
                       className="card-img-top post-image"
                     />
@@ -185,7 +185,7 @@ const PostList = () => {
             {selectedPost.image && (
               <div className="text-center mb-3">
                 <img
-                  src={`https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/uploads/${selectedPost.image}`}
+                  src={`https://github.com/yarazarin/mern-blog-server/upload/${selectedPost.image}`}
                   alt={selectedPost.title}
                   className="post-image"
                 />
