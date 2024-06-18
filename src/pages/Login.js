@@ -16,7 +16,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post('https://yarazarin.github.io/mern-blog-client/login', {
+      const response = await axios.post('https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/login', {
         username,
         password
       });
