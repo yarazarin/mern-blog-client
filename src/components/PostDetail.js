@@ -1,4 +1,3 @@
-//client/src/components/PostDetail.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
@@ -37,4 +36,6 @@ const PostDetail = () => {
       {post.image && <img src={post.image} alt={post.title} />}
     </div>
   );
+};
+
 export default PostDetail;
