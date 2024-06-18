@@ -11,30 +11,18 @@ import "./App.css";
 
 function App() {
   return (
-    <Router>
+    <Router basename="/mern-blog-client">
       <div className="App">
         <Navbar />
         <Routes>
           <Route path="/posts/:id" element={<PostDetail />} />
           <Route path="/login" element={<Login />} />
           <Route path="/myblog" element={<PostList />} />
-          <Route
-            path="/new"
-            element={
-              <PrivateRoute>
-                <PostForm />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/edit/:id"
-            element={
-              <PrivateRoute>
-                <PostForm />
-              </PrivateRoute>
-            }
-          />
-          <Route path="/" element={<PostList />} />
+          <Route path="/" element={<PrivateRoute />}>
+            <Route path="/" element={<PostList />} />
+            <Route path="/new" element={<PostForm />} />
+            <Route path="/edit/:id" element={<PostForm />} />
+          </Route>
         </Routes>
       </div>
     </Router>
