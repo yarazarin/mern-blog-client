@@ -132,8 +132,8 @@ const PostList = () => {
                     src={post.imageUrl}
                     alt={post.title}
                     className="card-img-top"
-                  />{" "}
-                  {/* Add this line */}
+                  />
+
                   <div
                     className="card-body"
                     style={{
@@ -195,8 +195,11 @@ const PostList = () => {
               direction: isPersian(selectedPost.content) ? "rtl" : "ltr",
             }}
           >
-            <img src={selectedPost.imageUrl} alt={selectedPost.title} />{" "}
-            {/* Add this line */}
+            <img
+              src={selectedPost.imageUrl}
+              alt={selectedPost.title}
+              className="modal-img"
+            />
             <div
               dangerouslySetInnerHTML={{ __html: selectedPost.content }}
             ></div>

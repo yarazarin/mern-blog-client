@@ -87,7 +87,7 @@
   -webkit-box-orient: vertical;
 }
 
-.post-image {
+.card-img-top {
   max-height: 300px;
   width: 100%;
   object-fit: contain;
@@ -95,6 +95,12 @@
   margin-top: 1rem;
   border-radius: 4px;
   transition: transform 0.2s;
+}
+
+.modal-img {
+  width: 100%;
+  object-fit: cover;
+  margin-bottom: 1rem;
 }
 
 .btn-primary,
