@@ -1,4 +1,4 @@
-//src/pages/PostList.js
+//client/src/pages/PostList.js
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
@@ -123,13 +123,6 @@ const PostList = () => {
                 onClick={() => handleShow(post)}
               >
                 <div className="card h-100 shadow-sm post-card">
-                  {post.image && (
-                    <img
-                      src={`https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/uploads/${post.image}`}
-                      alt={post.title}
-                      className="card-img-top post-image"
-                    />
-                  )}
                   <div
                     className="card-body"
                     style={{ direction: isPersian(post.content) ? "rtl" : "ltr" }}
@@ -182,15 +175,6 @@ const PostList = () => {
               direction: isPersian(selectedPost.content) ? "rtl" : "ltr",
             }}
           >
-            {selectedPost.image && (
-              <div className="text-center mb-3">
-                <img
-                  src={`https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/uploads/${selectedPost.image}`}
-                  alt={selectedPost.title}
-                  className="post-image"
-                />
-              </div>
-            )}
             <div
               dangerouslySetInnerHTML={{ __html: selectedPost.content }}
             ></div>
