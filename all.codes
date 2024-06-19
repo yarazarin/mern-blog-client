@@ -1,0 +1,717 @@
+CLIENT SIDE:
+
+CLIENT/public/404.html
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="refresh" content="0; URL=./index.html" />
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Page Not Found</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      // Redirect all 404 errors to index.html
+      window.location.href = '/mern-blog-client/';
+    </script>
+  </body>
+</html>
+
+
+CLIENT/public/index.html
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Web site created using create-react-app"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <title>React App</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+  </body>
+</html>
+
+
+//client/src/components/Navbar.js
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Navbar, Nav } from "react-bootstrap";
+import { NavLink } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBlog } from "@fortawesome/free-solid-svg-icons";
+
+const Navigation = () => {
+  const navigate = useNavigate();
+  const isAuth = !!localStorage.getItem("token");
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/myblog");
+  };
+
+  return (
+    <Navbar bg="none" expand="lg" className="justify-content-between px-3">
+      <Navbar.Brand as={NavLink} to="/myblog">
+        <FontAwesomeIcon icon={faBlog} /> My Blog
+      </Navbar.Brand>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Collapse id="basic-navbar-nav" className="justify-content-center">
+        <Nav>
+          {isAuth && (
+            <Nav.Link as={NavLink} to="/new">
+              Create Post
+            </Nav.Link>
+          )}
+          <Nav.Link as={NavLink} to="/myblog">
+            My Blog
+          </Nav.Link>
+          {!isAuth ? (
+            <Nav.Link as={NavLink} to="https://yarazarin.github.io/itisyara">
+              Go To Website
+            </Nav.Link>
+          ) : (
+            <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+          )}
+        </Nav>
+      </Navbar.Collapse>
+    </Navbar>
+  );
+};
+
+export default Navigation;
+
+
+//client/src/components/PostDetail.js
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+
+const PostDetail = () => {
+  const { id } = useParams();
+  const [post, setPost] = useState(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const response = await axios.get(`https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/posts/${id}`);
+        setPost(response.data);
+      } catch (error) {
+        console.error('Error fetching the post:', error);
+        setError('Error fetching the post');
+      }
+    };
+
+    fetchPost();
+  }, [id]);
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  if (!post) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <div>
+      <h1>{post.title}</h1>
+      <img src={post.imageUrl} alt={post.title} /> {/* Add this line */}
+      <div dangerouslySetInnerHTML={{ __html: post.content }} />
+    </div>
+  );
+};
+
+export default PostDetail;
+
+
+//CLIENT/src/pages/Login.js
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+const Login = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      const response = await axios.post('https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/auth/login', {
+        username,
+        password
+      });
+      console.log('Login successful:', response.data);
+      localStorage.setItem('token', response.data.token);
+      navigate('/');
+    } catch (err) {
+      console.error('Error during login:', err.response);
+      setError(err.response?.data?.message || 'Login failed');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="container">
+      <h2 className="text-center">Login</h2>
+      {error && <div className="alert alert-danger">{error}</div>}
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => {
+              setUsername(e.target.value);
+              setError('');
+            }}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <input
+            type="password"
+            className="form-control"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setError('');
+            }}
+            required
+          />
+        </div>
+        <button type="submit" className="btn btn-primary" disabled={loading}>
+          {loading ? 'Logging in...' : 'Login'}
+        </button>
+      </form>
+    </div>
+  );
+};
+
+export default Login;
+
+
+//client/src/pages/PostForm.js
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import "./PostForm.css";
+
+let Font = ReactQuill.Quill.import("formats/font");
+Font.whitelist = ["sans-serif", "vazir", "Times", "dast", "ava", "nastaliq"];
+ReactQuill.Quill.register(Font, true);
+
+const toolbarOptions = [
+  ["bold", "italic", "underline", "strike"],
+  ["blockquote", "code-block"],
+  [{ header: 1 }, { header: 2 }],
+  [{ list: "ordered" }, { list: "bullet" }],
+  [{ script: "sub" }, { script: "super" }],
+  [{ indent: "-1" }, { indent: "+1" }],
+  [{ direction: "rtl" }],
+  [{ size: ["small", false, "large", "huge"] }],
+  [{ header: [1, 2, 3, 4, 5, 6, false] }],
+  [{ color: [] }, { background: [] }],
+  [{ font: ["sans-serif", "vazir", "Times", "dast", "ava", "nastaliq"] }],
+  [{ align: [] }],
+  ["clean"],
+];
+
+const PostForm = () => {
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [error, setError] = useState("");
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      if (id) {
+        const token = localStorage.getItem("token");
+        try {
+          const response = await axios.get(
+            `https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/posts/${id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          setTitle(response.data.title);
+          setContent(response.data.content);
+        } catch (err) {
+          console.error("Error fetching post data:", err);
+          setError("Error fetching post data");
+        }
+      }
+    };
+
+    fetchPost();
+  }, [id]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem("token");
+
+    const postData = {
+      title,
+      content,
+      imageUrl,
+    };
+
+    try {
+      const url = id
+        ? `https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/posts/${id}`
+        : "https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/posts";
+      const method = id ? "put" : "post";
+      const response = await axios({
+        method,
+        url,
+        data: postData,
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      console.log("Post successful:", response.data);
+      setTitle("");
+      setContent("");
+      alert("Post created/updated successfully");
+      navigate("/");
+    } catch (err) {
+      console.error("Error posting data:", err);
+      setError("Request failed");
+    }
+  };
+  return (
+    <div className="container mt-5">
+      <h2 className="text-center mb-4">{id ? "Edit Post" : "Create Post"}</h2>
+      {error && <div className="alert alert-danger">{error}</div>}
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="title">Title</label>
+          <input
+            type="text"
+            id="title"
+            className="form-control"
+            placeholder="Enter title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="imageUrl">Image URL</label>
+          <input
+            type="text"
+            id="imageUrl"
+            className="form-control"
+            placeholder="Enter image URL"
+            value={imageUrl}
+            onChange={(e) => setImageUrl(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="content">Content</label>
+          <ReactQuill
+            id="content"
+            value={content}
+            onChange={setContent}
+            modules={{ toolbar: toolbarOptions }}
+            className="mb-3 bg-white content-container"
+          />
+        </div>
+        <button type="submit" className="btn btn-primary mt-3 mb-5">
+          {id ? "Update Post" : "Create Post"}
+        </button>
+      </form>
+    </div>
+  );
+};
+
+export default PostForm;
+
+
+//client/src/pages/PostList.js
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+import { format } from "date-fns";
+import "./PostList.css";
+
+function isPersian(str) {
+  const persianRegex = /[\u0600-\u06FF]/;
+  return persianRegex.test(str);
+}
+
+function truncate(str, no_chars) {
+  return str.length > no_chars ? str.substring(0, no_chars) + "..." : str;
+}
+
+const PostList = () => {
+  const [posts, setPosts] = useState([]);
+  const [selectedPost, setSelectedPost] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
+
+  const handleClose = () => setSelectedPost(null);
+  const handleShow = (post) => setSelectedPost(post);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await axios.get(
+          "https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/posts"
+        );
+        setPosts(response.data);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
+
+    fetchPosts();
+  }, []);
+
+  const handleDelete = async (id, e) => {
+    e.stopPropagation();
+    const token = localStorage.getItem("token");
+    try {
+      await axios.delete(
+        `https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/posts/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setPosts(posts.filter((post) => post._id !== id));
+    } catch (err) {
+      console.error("Error deleting post:", err);
+    }
+  };
+
+  const isAuth = !!localStorage.getItem("token");
+
+  const searchFilter = (post) => {
+    const term = searchTerm.trim().toLowerCase();
+    return (
+      post.title.toLowerCase().includes(term) ||
+      post.content.toLowerCase().includes(term)
+    );
+  };
+
+  const handleShare = (postId) => {
+    const url = `${window.location.origin}/mern-blog-client/posts/${postId}`;
+    if (navigator.share) {
+      navigator
+        .share({
+          title: "Check out this post",
+          url: url,
+        })
+        .catch((error) => console.error("Error sharing", error));
+    } else {
+      navigator.clipboard.writeText(url).then(() => {
+        alert("Link copied to clipboard!");
+      });
+    }
+  };
+
+  return (
+    <div className="container">
+      <h2 className="text-center my-4 welcome-title">Welcome to my Blog</h2>
+      <div className="input-group mb-3">
+        <input
+          type="text"
+          className="form-control card-search"
+          placeholder="Search..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <div className="input-group-append">
+          <button
+            className="btn btn-outline-secondary btn-search"
+            type="button"
+          >
+            <i className="fa fa-search"></i>
+          </button>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-md-4 col-lg-3 mb-4">
+          <div className="list-group">
+            <caption className="post-list_header">Posts</caption>
+            {posts.filter(searchFilter).map((post) => (
+              <button
+                key={post._id}
+                onClick={() => handleShow(post)}
+                className="list-group-item list-group-item-action"
+              >
+                {truncate(post.title, 20)}
+              </button>
+            ))}
+          </div>
+        </div>
+        <div className="col-md-8 col-lg-9">
+          <div className="row">
+            {posts.filter(searchFilter).map((post) => (
+              <div
+                key={post._id}
+                className="col-md-6 col-lg-4 mb-4"
+                onClick={() => handleShow(post)}
+              >
+                <div className="card h-100 shadow-sm post-card">
+                  <img
+                    src={post.imageUrl}
+                    alt={post.title}
+                    className="card-img-top"
+                  />
+
+                  <div
+                    className="card-body"
+                    style={{
+                      direction: isPersian(post.content) ? "rtl" : "ltr",
+                    }}
+                  >
+                    <h5 className="card-title">{post.title}</h5>
+                    <div className="card-text">
+                      <p
+                        className="truncate"
+                        dangerouslySetInnerHTML={{
+                          __html: truncate(post.content, 20) + "...",
+                        }}
+                      ></p>
+                      <p className="card-subtitle mb-2 text-muted date-text">
+                        {format(new Date(post.createdAt), "PPpp")}
+                      </p>
+                    </div>
+                    {isAuth && (
+                      <div className="d-flex justify-content-between mt-2">
+                        <Link
+                          to={`/edit/${post._id}`}
+                          className="btn btn-primary"
+                        >
+                          Edit
+                        </Link>
+                        <button
+                          onClick={(e) => handleDelete(post._id, e)}
+                          className="btn btn-danger"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      {selectedPost && (
+        <Modal
+          show={true}
+          onHide={handleClose}
+          dialogClassName="custom-modal-size"
+        >
+          <Modal.Header closeButton>
+            <Modal.Title
+              style={{
+                direction: isPersian(selectedPost.title) ? "rtl" : "ltr",
+              }}
+            >
+              {selectedPost.title}
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body
+            style={{
+              direction: isPersian(selectedPost.content) ? "rtl" : "ltr",
+            }}
+          >
+            <img
+              src={selectedPost.imageUrl}
+              alt={selectedPost.title}
+              className="modal-img"
+            />
+            <div
+              dangerouslySetInnerHTML={{ __html: selectedPost.content }}
+            ></div>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button
+              variant="primary"
+              onClick={() => handleShare(selectedPost._id)}
+            >
+              Share
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
+    </div>
+  );
+};
+
+export default PostList;
+
+
+//CLIENT/src/pages/PrivateRoute.js
+import React from 'react';
+import { Navigate, Outlet } from 'react-router-dom';
+
+
+const PrivateRoute = () => {
+  const isAuth = !!localStorage.getItem('token');
+  return isAuth ? <Outlet /> : <Navigate to="/login" />;
+};
+
+export default PrivateRoute;
+
+
+//client/src/App.js
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import PostList from "./pages/PostList";
+import PostForm from "./pages/PostForm";
+import Login from "./pages/Login";
+import PrivateRoute from "./pages/PrivateRoute";
+import Navbar from "./components/Navbar";
+import PostDetail from "./components/PostDetail";
+import "./App.css";
+
+function App() {
+  return (
+    <Router basename="/mern-blog-client">
+      <div className="App">
+        <Navbar />
+        <Routes>
+          <Route path="/posts/:id" element={<PostDetail />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/myblog" element={<PostList />} />
+          <Route path="/" element={<PrivateRoute />}>
+            <Route path="/" element={<PostList />} />
+            <Route path="/new" element={<PostForm />} />
+            <Route path="/edit/:id" element={<PostForm />} />
+          </Route>
+        </Routes>
+      </div>
+    </Router>
+  );
+}
+
+export default App;
+
+
+//CLIENT/src/index.js
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <App />
+);
+
+
+//CLIENT/server.js
+
+const express = require('express');
+const path = require('path');
+const app = express();
+
+app.use(express.static(path.join(__dirname, 'build')));
+
+app.get('*', function (req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+
+
+//CLIENT/package.json
+{
+  "name": "client",
+  "homepage": "https://yarazarin.github.io/mern-blog-client",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.5.2",
+    "@fortawesome/free-solid-svg-icons": "^6.5.2",
+    "@fortawesome/react-fontawesome": "^0.2.2",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.7.2",
+    "bootstrap": "^5.3.3",
+    "date-fns": "^3.6.0",
+    "react": "^18.3.1",
+    "react-bootstrap": "^2.10.2",
+    "react-dom": "^18.3.1",
+    "react-quill": "^2.0.0",
+    "react-router-dom": "^6.23.1",
+    "react-scripts": "5.0.1",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5",
+    "gh-pages": "^6.1.1"
+  }
+}
