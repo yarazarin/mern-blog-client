@@ -17,9 +17,11 @@ function App() {
           <Route path="/posts/:id" element={<PostDetail />} />
           <Route path="/login" element={<Login />} />
           <Route path="/myblog" element={<PostList />} />
-          <Route path="/" element={<PrivateRoute />}>
-            <Route path="/" element={<PostList />} />
+          <Route path="/" element={<PostList />} />
+          <Route path="/new" element={<PrivateRoute />}>
             <Route path="/new" element={<PostForm />} />
+          </Route>
+          <Route path="/edit/:id" element={<PrivateRoute />}>
             <Route path="/edit/:id" element={<PostForm />} />
           </Route>
         </Routes>
