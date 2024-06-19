@@ -71,10 +71,12 @@ const PostList = () => {
   const handleShare = (postId) => {
     const url = `${window.location.origin}/mern-blog-client/posts/${postId}`;
     if (navigator.share) {
-      navigator.share({
-        title: "Check out this post",
-        url: url,
-      }).catch((error) => console.error("Error sharing", error));
+      navigator
+        .share({
+          title: "Check out this post",
+          url: url,
+        })
+        .catch((error) => console.error("Error sharing", error));
     } else {
       navigator.clipboard.writeText(url).then(() => {
         alert("Link copied to clipboard!");
@@ -94,7 +96,10 @@ const PostList = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         <div className="input-group-append">
-          <button className="btn btn-outline-secondary btn-search" type="button">
+          <button
+            className="btn btn-outline-secondary btn-search"
+            type="button"
+          >
             <i className="fa fa-search"></i>
           </button>
         </div>
@@ -123,9 +128,17 @@ const PostList = () => {
                 onClick={() => handleShow(post)}
               >
                 <div className="card h-100 shadow-sm post-card">
+                  <img
+                    src={post.imageUrl}
+                    alt={post.title}
+                    className="card-img-top"
+                  />{" "}
+                  {/* Add this line */}
                   <div
                     className="card-body"
-                    style={{ direction: isPersian(post.content) ? "rtl" : "ltr" }}
+                    style={{
+                      direction: isPersian(post.content) ? "rtl" : "ltr",
+                    }}
                   >
                     <h5 className="card-title">{post.title}</h5>
                     <div className="card-text">
@@ -141,7 +154,10 @@ const PostList = () => {
                     </div>
                     {isAuth && (
                       <div className="d-flex justify-content-between mt-2">
-                        <Link to={`/edit/${post._id}`} className="btn btn-primary">
+                        <Link
+                          to={`/edit/${post._id}`}
+                          className="btn btn-primary"
+                        >
                           Edit
                         </Link>
                         <button
@@ -160,7 +176,11 @@ const PostList = () => {
         </div>
       </div>
       {selectedPost && (
-        <Modal show={true} onHide={handleClose} dialogClassName="custom-modal-size">
+        <Modal
+          show={true}
+          onHide={handleClose}
+          dialogClassName="custom-modal-size"
+        >
           <Modal.Header closeButton>
             <Modal.Title
               style={{
@@ -175,6 +195,8 @@ const PostList = () => {
               direction: isPersian(selectedPost.content) ? "rtl" : "ltr",
             }}
           >
+            <img src={selectedPost.imageUrl} alt={selectedPost.title} />{" "}
+            {/* Add this line */}
             <div
               dangerouslySetInnerHTML={{ __html: selectedPost.content }}
             ></div>
@@ -183,7 +205,10 @@ const PostList = () => {
             <Button variant="secondary" onClick={handleClose}>
               Close
             </Button>
-            <Button variant="primary" onClick={() => handleShare(selectedPost._id)}>
+            <Button
+              variant="primary"
+              onClick={() => handleShare(selectedPost._id)}
+            >
               Share
             </Button>
           </Modal.Footer>

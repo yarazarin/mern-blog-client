@@ -33,6 +33,7 @@ const PostDetail = () => {
   return (
     <div>
       <h1>{post.title}</h1>
+      <img src={post.imageUrl} alt={post.title} /> {/* Add this line */}
       <div dangerouslySetInnerHTML={{ __html: post.content }} />
     </div>
   );

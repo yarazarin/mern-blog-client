@@ -29,6 +29,7 @@ const toolbarOptions = [
 const PostForm = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
   const [error, setError] = useState("");
   const { id } = useParams();
   const navigate = useNavigate();
@@ -65,6 +66,7 @@ const PostForm = () => {
     const postData = {
       title,
       content,
+      imageUrl,
     };
 
     try {
@@ -91,7 +93,6 @@ const PostForm = () => {
       setError("Request failed");
     }
   };
-
   return (
     <div className="container mt-5">
       <h2 className="text-center mb-4">{id ? "Edit Post" : "Create Post"}</h2>
@@ -107,6 +108,17 @@ const PostForm = () => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="imageUrl">Image URL</label>
+          <input
+            type="text"
+            id="imageUrl"
+            className="form-control"
+            placeholder="Enter image URL"
+            value={imageUrl}
+            onChange={(e) => setImageUrl(e.target.value)}
           />
         </div>
         <div className="form-group">
