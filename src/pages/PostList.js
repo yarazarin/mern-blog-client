@@ -1,7 +1,6 @@
-//client/src/pages/PostList.js
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { format } from "date-fns";
@@ -20,7 +19,6 @@ const PostList = () => {
   const [posts, setPosts] = useState([]);
   const [selectedPost, setSelectedPost] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const navigate = useNavigate();
 
   const handleClose = () => setSelectedPost(null);
   const handleShow = (post) => setSelectedPost(post);
