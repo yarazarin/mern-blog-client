@@ -1,21 +1,21 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navigation from './components/Navbar';
-import Home from './pages/PostList';
-import PostDetail from './components/PostDetail';
-import PostForm from './pages/PostForm';
-import Login from './pages/Login';
-import PrivateRoute from './pages/PrivateRoute';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import PostList from "./pages/PostList";
+import PostForm from "./pages/PostForm";
+import Login from "./pages/Login";
+import PrivateRoute from "./pages/PrivateRoute";
+import Navbar from "./components/Navbar";
+import PostDetail from "./components/PostDetail";
+import "./App.css";
 
 function App() {
   return (
     <Router basename="/mern-blog-client">
       <div className="App">
-        <Navigation />
+        <Navbar />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/myblog" element={<Home />} />
+          <Route path="/" element={<PostList />} />
+          <Route path="/myblog" element={<PostList />} />
           <Route path="/posts/:id" element={<PostDetail />} />
           <Route path="/new" element={<PrivateRoute />}>
             <Route path="/new" element={<PostForm />} />
