@@ -34,7 +34,7 @@
 
 
 import React from "react";
-import { HashRouter as Router, Route, Routes } from "react-router-dom";// HashRouter for github
+import { HashRouter as Router, Route, Routes } from "react-router-dom";
 import PostList from "./pages/PostList";
 import PostForm from "./pages/PostForm";
 import Login from "./pages/Login";
@@ -52,12 +52,8 @@ function App() {
           <Route path="/posts/:id" element={<PostDetail />} />
           <Route path="/login" element={<Login />} />
           <Route path="/myblog" element={<PostList />} />
-          <Route path="/new" element={<PrivateRoute />}>
-            <Route path="/new" element={<PostForm />} />
-          </Route>
-          <Route path="/edit/:id" element={<PrivateRoute />}>
-            <Route path="/edit/:id" element={<PostForm />} />
-          </Route>
+          <Route path="/new" element={<PrivateRoute component={PostForm} />} />
+          <Route path="/edit/:id" element={<PrivateRoute component={PostForm} />} />
           <Route path="/" element={<PostList />} />
         </Routes>
       </div>
