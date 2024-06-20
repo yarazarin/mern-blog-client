@@ -67,7 +67,7 @@ const PostList = () => {
   };
 
   const handleShare = (postId) => {
-    const url = `${window.location.origin}/mern-blog-client/posts/${postId}`;
+    const url = `${window.location.origin}/posts/${postId}`;
     if (navigator.share) {
       navigator
         .share({

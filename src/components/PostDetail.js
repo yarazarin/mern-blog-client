@@ -1,7 +1,8 @@
-//client/src/components/PostDetail.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { Container, Row, Col, Image, Alert, Spinner } from 'react-bootstrap';
+import './PostDetail.css'; // Import custom CSS for additional styling
 
 const PostDetail = () => {
   const { id } = useParams();
@@ -23,19 +24,35 @@ const PostDetail = () => {
   }, [id]);
 
   if (error) {
-    return <div>{error}</div>;
+    return <Alert variant="danger">{error}</Alert>;
   }
 
   if (!post) {
-    return <div>Loading...</div>;
+    return (
+      <Container className="text-center mt-5">
+        <Spinner animation="border" role="status">
+          <span className="sr-only">Loading...</span>
+        </Spinner>
+      </Container>
+    );
   }
 
   return (
-    <div>
-      <h1>{post.title}</h1>
-      <img src={post.imageUrl} alt={post.title} /> {/* Add this line */}
-      <div dangerouslySetInnerHTML={{ __html: post.content }} />
-    </div>
+    <Container className="mt-5 mb-5 det-container">
+      <Row className="justify-content-center">
+        <Col lg="8">
+          <article>
+            <h1 className="display-4 mb-4 det-titel">{post.title}</h1>
+            <Image src={post.imageUrl} alt={post.title} fluid className="mb-4 rounded det-img" />
+            <div className="post-content" dangerouslySetInnerHTML={{ __html: post.content }} />
+            <hr className="my-5" />
+            <div className="author-info text-muted">
+              <p>Written by {post.author} on {new Date(post.createdAt).toLocaleDateString()}</p>
+            </div>
+          </article>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
