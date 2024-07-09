@@ -31,8 +31,8 @@ const Navigation = () => {
             My Blog
           </Nav.Link>
           {!isAuth ? (
-            <Nav.Link as={NavLink} to="https://yarazarin.github.io/itisyara">
-              Go To Website
+            <Nav.Link as={NavLink} to="https://itisyara.com">
+              Main Website
             </Nav.Link>
           ) : (
             <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
