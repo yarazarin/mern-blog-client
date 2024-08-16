@@ -1,4 +1,4 @@
-//client/src/pages/PostForm.js
+//src/pages/PostForm.js
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -26,10 +26,19 @@ const toolbarOptions = [
   ["clean"],
 ];
 
+const tagOptions = [
+  "Personal",
+  "Poem",
+  "Story",
+];
+
 const PostForm = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const [selectedTag, setSelectedTag] = useState(tagOptions[0]);
+  const [date, setDate] = useState("");
+  const [addToManual, setAddToManual] = useState(false); // New state for checkbox
   const [error, setError] = useState("");
   const { id } = useParams();
   const navigate = useNavigate();
@@ -40,7 +49,7 @@ const PostForm = () => {
         const token = localStorage.getItem("token");
         try {
           const response = await axios.get(
-            `https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/posts/${id}`,
+            `${process.env.REACT_APP_API_URL}/posts/${id}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -49,6 +58,10 @@ const PostForm = () => {
           );
           setTitle(response.data.title);
           setContent(response.data.content);
+          setImageUrl(response.data.imageUrl);
+          setSelectedTag(response.data.tags[0] || tagOptions[0]);
+          setDate(response.data.date ? response.data.date.split("T")[0] : "");
+          setAddToManual(response.data.addToManual || false); // Fetch checkbox value if editing
         } catch (err) {
           console.error("Error fetching post data:", err);
           setError("Error fetching post data");
@@ -67,12 +80,14 @@ const PostForm = () => {
       title,
       content,
       imageUrl,
+      tags: [selectedTag],
+      date,
+      addToManual,
     };
 
     try {
-      const url = id
-        ? `https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/posts/${id}`
-        : "https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/posts";
+      const baseUrl = process.env.REACT_APP_API_URL;
+      const url = id ? `${baseUrl}/posts/${id}` : `${baseUrl}/posts`;
       const method = id ? "put" : "post";
       const response = await axios({
         method,
@@ -86,6 +101,9 @@ const PostForm = () => {
       console.log("Post successful:", response.data);
       setTitle("");
       setContent("");
+      setImageUrl("");
+      setDate("");
+      setAddToManual(false);
       alert("Post created/updated successfully");
       navigate("/");
     } catch (err) {
@@ -93,6 +111,15 @@ const PostForm = () => {
       setError("Request failed");
     }
   };
+
+  const handleTagChange = (e) => {
+    setSelectedTag(e.target.value);
+  };
+
+  const handleCheckboxChange = (e) => {
+    setAddToManual(e.target.checked);
+  };
+
   return (
     <div className="container mt-5">
       <h2 className="text-center mb-4">{id ? "Edit Post" : "Create Post"}</h2>
@@ -122,6 +149,32 @@ const PostForm = () => {
           />
         </div>
         <div className="form-group">
+          <label htmlFor="tag">Tag</label>
+          <select
+            id="tag"
+            className="form-control"
+            value={selectedTag}
+            onChange={handleTagChange}
+          >
+            {tagOptions.map((tag) => (
+              <option key={tag} value={tag}>
+                {tag}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="form-group">
+          <label htmlFor="date">Date</label>
+          <input
+            type="date"
+            id="date"
+            className="form-control"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-group">
           <label htmlFor="content">Content</label>
           <ReactQuill
             id="content"
@@ -131,9 +184,23 @@ const PostForm = () => {
             className="mb-3 bg-white content-container"
           />
         </div>
-        <button type="submit" className="btn btn-primary mt-3 mb-5">
-          {id ? "Update Post" : "Create Post"}
+        <div className="form-group form-check">
+          <input
+            type="checkbox"
+            className="form-check-input"
+            id="addToManual"
+            checked={addToManual}
+            onChange={handleCheckboxChange}
+          />
+          <label className="form-check-label" htmlFor="addToManual">
+            Add to Highlights on Home Page
+          </label>
+        </div>
+        <button type="submit" className="submit-post_btn">
+          {id ? "Update Post" : "Submit"}
         </button>
+        <br/>
+        <br/>
       </form>
     </div>
   );

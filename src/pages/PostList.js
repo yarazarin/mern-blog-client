@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 import "./PostList.css";
 
 function isPersian(str) {
@@ -17,43 +17,63 @@ function truncate(str, no_chars) {
 
 const PostList = () => {
   const [posts, setPosts] = useState([]);
-  const [selectedPost, setSelectedPost] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
-
-  const handleClose = () => setSelectedPost(null);
-  const handleShow = (post) => setSelectedPost(post);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [postToDelete, setPostToDelete] = useState(null);
+  const { tag } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
         const response = await axios.get(
-          "https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/posts"
+          `${process.env.REACT_APP_API_URL}/posts`
         );
         setPosts(response.data);
       } catch (error) {
         console.error("Error fetching posts:", error);
       }
     };
-
+  
     fetchPosts();
   }, []);
 
-  const handleDelete = async (id, e) => {
-    e.stopPropagation();
+  const handleDelete = async (id) => {
     const token = localStorage.getItem("token");
+    if (!token) {
+      console.error("No authentication token found");
+      alert("You are not authenticated. Please log in.");
+      return;
+    }
+
     try {
       await axios.delete(
-        `https://mern-blog-server-bd5b7d4cacb2.herokuapp.com/posts/${id}`,
+        `${process.env.REACT_APP_API_URL}/posts/${id}`,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         }
       );
       setPosts(posts.filter((post) => post._id !== id));
+      handleCloseConfirm();
     } catch (err) {
       console.error("Error deleting post:", err);
+      if (err.response && err.response.status === 401) {
+        alert("Unauthorized: Please log in again.");
+      } else {
+        alert("An error occurred while deleting the post.");
+      }
     }
+  };
+
+  const handleShowConfirm = (post, e) => {
+    e.stopPropagation();
+    setPostToDelete(post);
+    setShowConfirm(true);
+  };
+
+  const handleCloseConfirm = () => {
+    setPostToDelete(null);
+    setShowConfirm(false);
   };
 
   const isAuth = !!localStorage.getItem("token");
@@ -66,25 +86,17 @@ const PostList = () => {
     );
   };
 
-  const handleShare = (postId) => {
-    const url = `${window.location.origin}/posts/${postId}`;
-    if (navigator.share) {
-      navigator
-        .share({
-          title: "Check out this post",
-          url: url,
-        })
-        .catch((error) => console.error("Error sharing", error));
-    } else {
-      navigator.clipboard.writeText(url).then(() => {
-        alert("Link copied to clipboard!");
-      });
-    }
+  const filteredPosts = posts.filter((post) => !tag || post.tags.includes(tag));
+
+  const handlePostClick = (postId) => {
+    navigate(`/posts/${postId}`);
   };
 
   return (
-    <div className="container">
-      <h2 className="text-center my-4 welcome-title">Welcome to my Blog</h2>
+    <div className="container post-list_container">
+      <h2 className="text-center my-4 welcome-title">
+        {tag ? `"${tag}"` : ""}
+      </h2>
       <div className="input-group mb-3">
         <input
           type="text"
@@ -102,14 +114,14 @@ const PostList = () => {
           </button>
         </div>
       </div>
-      <div className="row">
-        <div className="col-md-4 col-lg-3 mb-4">
+      <div className="row post-list_row">
+        <div className="col-md-4 col-lg-3 mb-0 post-list_sidebar">
           <div className="list-group">
             <caption className="post-list_header">Posts</caption>
-            {posts.filter(searchFilter).map((post) => (
+            {filteredPosts.filter(searchFilter).map((post) => (
               <button
                 key={post._id}
-                onClick={() => handleShow(post)}
+                onClick={() => handlePostClick(post._id)}
                 className="list-group-item list-group-item-action"
               >
                 {truncate(post.title, 20)}
@@ -117,21 +129,15 @@ const PostList = () => {
             ))}
           </div>
         </div>
-        <div className="col-md-8 col-lg-9">
-          <div className="row">
-            {posts.filter(searchFilter).map((post) => (
+        <div className="col-md-8 col-lg-9 tag-cards_">
+          <div className="row tag-cards_container">
+            {filteredPosts.filter(searchFilter).map((post) => (
               <div
                 key={post._id}
-                className="col-md-6 col-lg-4 mb-4"
-                onClick={() => handleShow(post)}
+                className="col-4 col-md-4 col-lg-3 mb-4"
+                onClick={() => handlePostClick(post._id)}
               >
                 <div className="card h-100 shadow-sm post-card">
-                  <img
-                    src={post.imageUrl}
-                    alt={post.title}
-                    className="card-img-top"
-                  />
-
                   <div
                     className="card-body"
                     style={{
@@ -143,26 +149,27 @@ const PostList = () => {
                       <p
                         className="truncate"
                         dangerouslySetInnerHTML={{
-                          __html: truncate(post.content, 20) + "...",
+                          __html: truncate(post.content, 20),
                         }}
                       ></p>
-                      <p className="card-subtitle mb-2 text-muted date-text">
-                        {format(new Date(post.createdAt), "PPpp")}
+                      <p className="date_">
+                        {format(parseISO(post.date), "yyyy.MM.dd")}
                       </p>
                     </div>
                     {isAuth && (
-                      <div className="d-flex justify-content-between mt-2">
+                      <div className="d-flex justify-content-between mt-2 edit-del_btn">
                         <Link
                           to={`/edit/${post._id}`}
                           className="btn btn-primary"
+                          onClick={(e) => e.stopPropagation()}
                         >
-                          Edit
+                          <i className="fa-solid fa-pen-to-square"></i>
                         </Link>
                         <button
-                          onClick={(e) => handleDelete(post._id, e)}
+                          onClick={(e) => handleShowConfirm(post, e)}
                           className="btn btn-danger"
                         >
-                          Delete
+                          <i className="fa-solid fa-trash"></i>
                         </button>
                       </div>
                     )}
@@ -173,48 +180,25 @@ const PostList = () => {
           </div>
         </div>
       </div>
-      {selectedPost && (
-        <Modal
-          show={true}
-          onHide={handleClose}
-          dialogClassName="custom-modal-size"
-        >
-          <Modal.Header closeButton>
-            <Modal.Title
-              style={{
-                direction: isPersian(selectedPost.title) ? "rtl" : "ltr",
-              }}
-            >
-              {selectedPost.title}
-            </Modal.Title>
-          </Modal.Header>
-          <Modal.Body
-            style={{
-              direction: isPersian(selectedPost.content) ? "rtl" : "ltr",
-            }}
+      <Modal show={showConfirm} onHide={handleCloseConfirm}>
+        <Modal.Header closeButton>
+          <Modal.Title></Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          are you sure you want to delete this post?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseConfirm}>
+            cancel
+          </Button>
+          <Button
+            variant="danger"
+            onClick={() => handleDelete(postToDelete._id)}
           >
-            <img
-              src={selectedPost.imageUrl}
-              alt={selectedPost.title}
-              className="modal-img"
-            />
-            <div
-              dangerouslySetInnerHTML={{ __html: selectedPost.content }}
-            ></div>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
-            <Button
-              variant="primary"
-              onClick={() => handleShare(selectedPost._id)}
-            >
-              Share
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      )}
+            delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
