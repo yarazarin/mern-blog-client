@@ -90,7 +90,7 @@ const Navigation = () => {
   return (
     <Navbar bg="light" expand="lg" className="shadow-sm">
       <Navbar.Brand as={NavLink} to="/" className="font-weight-bold logo">
-        LOGO
+        Yara Zarin
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">

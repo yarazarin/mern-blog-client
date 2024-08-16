@@ -128,19 +128,22 @@
 .card-title {
   font-weight: bold;
   margin-bottom: 0.5rem;
-  font-size: 1rem;
+  font-size: .8rem;
   text-align: center;
   overflow: hidden;
   padding: 14px;
 }
 
 .card-subtitle {
-  font-size: 0.9rem;
+  font-size: 0.2rem;
   margin-bottom: 0.5rem;
 }
 
 .card-text {
   color: #666;
+}
+.card-text p{
+display:none;
 }
 
 .truncate {
@@ -237,7 +240,7 @@
   margin: 5px !important;
   min-width: 90%;
   text-align: center;
-  direction: rtl;
+  direction: ltr;
 }
 
 .modal-content {

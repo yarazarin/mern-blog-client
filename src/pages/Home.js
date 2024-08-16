@@ -41,9 +41,9 @@ const Home = () => {
             </div>
 
             <div className="about-container">
-              <h2>َAbout</h2>
+              <h2>About Me</h2>
               <p className="pre-type">
-                {` sdfg sdfg sdfg sdfg sdfg sdfg sdfg sdfg sdfg sdfgsdf gsdfg sdfgsdfg `}
+                {` I'm a proactive Full-Stack Web Developer specializing in the M.E.R.N stack with extensive experience in AWS deployment. With a background in diverse roles ranging from social media communications to warehouse management, I bring a unique blend of problem-solving skills and creativity to my work. Currently seeking opportunities full-stack development where I can leverage my expertise to create innovative web solutions and drive positive change. `}
               </p>
             </div>
           </div>
@@ -62,7 +62,7 @@ const Home = () => {
               <div className="carousel-item active">
                 <div className="card card_a">
                   <div className="card-body card-body_b">
-                    <h5 className="card-title">Post 1</h5>
+                    <h5 className="card-title">Soon!</h5>
                     <p className="card-text"> </p>
                   </div>
                 </div>
@@ -70,7 +70,7 @@ const Home = () => {
               <div className="carousel-item">
                 <div className="card card_a">
                   <div className="card-body card-body_b">
-                    <h5 className="card-title">Post 2</h5>
+                    <h5 className="card-title">Soon!</h5>
                     <p className="card-text"></p>
                   </div>
                 </div>
@@ -128,7 +128,7 @@ const Home = () => {
           </div>
 
           <div className="container_books-menu">
-            <h6 className="text-center h6_title h6_title-lastposts">last </h6>
+            <h6 className="text-center h6_title h6_title-lastposts">last Posts</h6>
             <div className="books-menu">
               <div className="card-deck">
                 {latestPosts.map((post) => (
