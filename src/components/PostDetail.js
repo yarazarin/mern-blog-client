@@ -69,7 +69,7 @@ const PostDetail = () => {
             <Col lg="8">
               <article>
                 <Button variant="" className="share-btn" onClick={handleShare}>
-                  <i class="fa-solid fa-share-from-square"></i> share
+                <i class="fa-solid fa-arrow-up-from-bracket"></i> share
                 </Button>
                 <h1 className="display-4 mb-4 det-titel">{post.title}</h1>
                 {/* Conditionally render the image */}
