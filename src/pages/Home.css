@@ -468,4 +468,11 @@
     left: 0;
     top: 0;
   }
+  .card-body_b {
+    position: relative;
+    top: 10px;
+    width: 200px;
+    min-height: 100px;
+    left: 46px;
+  }
 }
