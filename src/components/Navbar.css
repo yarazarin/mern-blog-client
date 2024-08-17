@@ -15,7 +15,7 @@
   font-size: 1.1rem;
 }
 .logo {
-  position: relative;
+  position: absolute;
   display: flex;
   height: 3.5rem;
   width: auto; 
@@ -113,5 +113,15 @@
   }
   .search-icon {
     display: none;
+  }
+  .logo {
+    position: absolute;
+    display: flex;
+    height: 3.5rem;
+    width: auto; 
+    max-width: 40%; 
+    margin-left: 15px;
+    margin-top: 0px;
+    left: 0;
   }
 }
