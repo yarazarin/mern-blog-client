@@ -46,8 +46,6 @@ const PostDetail = () => {
       alert("Share feature is not supported in your browser.");
     }
   };
-  
-  
 
   if (error) {
     return <Alert variant="danger">{error}</Alert>;
@@ -90,7 +88,13 @@ const PostDetail = () => {
                 <hr className="my-5" />
                 <div className="author-info text-muted">
                   <p className="date_">
-                    {new Date(post.createdAt).toLocaleDateString()}
+                    {post.date
+                      ? new Date(post.date).toLocaleDateString(undefined, {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        })
+                      : "Date not available"}
                   </p>
                 </div>
                 <div className="post-tags mt-3">
