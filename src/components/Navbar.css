@@ -1,43 +1,60 @@
+/* src/components/Navbar.css */
+:root {
+  --antiflash-white: #f0f0f1;
+  --columbia-blue: #cddce3;
+  --platinum: #dde0e6;
+  --seasalt: #f6f7f7;
+  --white: #fbfbfb;
+  --french-gray: #cfd4da;
+  --sky-blue: #80bed0;
+  --moonstone: #45b0bc;
+  --french-gray-2: #c7cacf;
+  --platinum-2: #e6e7e9;
+  --dark: #000000;
+  --dark-2: #343a40;
+  --dark-3: #495057;
+  --red: #c70039;
+}
+
 .navbar {
   display: flex;
-  color: #666 !important;
+  color: var(--french-gray-2) !important; 
   border-radius: 20px;
-  background: #dde1e7 !important;
+  background: var(--platinum) !important; 
   box-shadow: -8px -8px 10px rgba(255, 255, 255, 0.762),
     5px 5px 9px rgba(94, 104, 121, 0.563) !important;
   min-width: 85%;
   margin: auto;
   padding-left: 100px;
   padding-right: 100px;
-  margin-top: 20px;
+  margin-top: 0px;
   font-size: 1.1rem;
   font-weight: 600;
   font-size: 1.1rem;
 }
-/* .logo{
+.logo {
   position: absolute;
-  left: 0px;
-  top: 0px;
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-} */
-
-.logo{
-  font-family: "vazir";
+  display: flex;
+  height: 3.5rem;
+  width: auto; 
+  max-width: 100%; 
+  margin-left: 15px;
+  margin-top: 0px;
+  left: 0;
 }
+
 .navbar-brand {
   font-size: 1.3rem;
   font-weight: 700;
-  color: #343a40 !important;
+  color: var(--dark) !important;
 }
 
 .nav-link {
-  color: #343a40 !important;
+  color: var(--dark) !important;
 }
 
 .nav-link:hover {
-  color: #007bff !important;
+  color: var(--sky-blue) !important;
 }
 
 .search-container {
@@ -51,7 +68,7 @@
   z-index: 1000;
 }
 
-.list-group_search{
+.list-group_search {
   position: absolute;
   top: 100%;
   left: 0;
@@ -61,54 +78,58 @@
   max-height: 300px;
   overflow-y: auto;
   overflow-x: hidden;
-  background-color: #fff;
+  background-color: transparent;
 }
+
 .search-results .list-group-item {
   display: flex;
   position: relative;
   align-items: center;
   justify-content: space-between;
-  padding: 10px;
+  padding-top: 20px;
+  padding-right: 20px;
+  padding-left: 20px;
   margin-bottom: 5px;
-  background-color: #fff;
-  border: 1px solid #ddd;
+  background-color: var(--white);
+  border: 1px solid var(--platinum-2);
   max-width: 100%;
-  max-height: 30px;
+  max-height: 100px;
   overflow: hidden;
 }
 
 .search-results .list-group-item:hover {
-  background-color: #f8f9fa;
+  background-color: var(--seasalt);
 }
 
 .list-group-item a {
   cursor: pointer;
   text-decoration: none;
-  color: #343a40;
-  font-size: .8rem;
-  font-family: "Vazir", sans-serif;
+  color: var(--dark);
+  font-size: 0.8rem;
+  font-family: sans-serif;
   overflow: hidden;
 }
 
-.search-icon{
+.search-icon {
   position: absolute;
   top: 50%;
   right: 115px;
   transform: translateY(-60%);
   font-size: 1.2rem;
-  color: #343a40;
+  color: var(--dark);
   cursor: pointer;
 }
 
 @media (max-width: 993px) {
   .navbar {
+    direction: rtl;
     width: 100%;
     padding-left: 25px;
     padding-right: 20px;
     border-radius: 0;
     margin-top: 0;
   }
-  .search-icon{
+  .search-icon {
     display: none;
   }
 }

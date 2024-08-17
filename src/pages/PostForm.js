@@ -1,4 +1,3 @@
-//src/pages/PostForm.js
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -28,15 +27,27 @@ const toolbarOptions = [
 
 const tagOptions = [
   "Personal",
-  "Poem",
-  "Story",
+  "Technology",
+  "News",
+  "Jobs",
+  "Hobbies",
+  "Life",
+  "Gadgets",
+  "Games",
+  "Programming",
+  "Web Development",
+  "Mobile Development",
+  "Development",
+  "AI",
+  "Machine Learning",
 ];
 
 const PostForm = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-  const [selectedTag, setSelectedTag] = useState(tagOptions[0]);
+  const [selectedTags, setSelectedTags] = useState([]); // Updated state for multiple tags
+  const [customTags, setCustomTags] = useState(""); // New state for custom tags
   const [date, setDate] = useState("");
   const [addToManual, setAddToManual] = useState(false); // New state for checkbox
   const [error, setError] = useState("");
@@ -59,7 +70,7 @@ const PostForm = () => {
           setTitle(response.data.title);
           setContent(response.data.content);
           setImageUrl(response.data.imageUrl);
-          setSelectedTag(response.data.tags[0] || tagOptions[0]);
+          setSelectedTags(response.data.tags || []);
           setDate(response.data.date ? response.data.date.split("T")[0] : "");
           setAddToManual(response.data.addToManual || false); // Fetch checkbox value if editing
         } catch (err) {
@@ -76,11 +87,21 @@ const PostForm = () => {
     e.preventDefault();
     const token = localStorage.getItem("token");
 
+    const allTags = [
+      ...selectedTags,
+      ...customTags.split(",").map((tag) => tag.trim()),
+    ].filter((tag) => tag);
+
+    if (allTags.length === 0) {
+      setError("Please select at least one tag or enter a custom tag.");
+      return;
+    }
+
     const postData = {
       title,
       content,
       imageUrl,
-      tags: [selectedTag],
+      tags: allTags, // Include all tags
       date,
       addToManual,
     };
@@ -104,6 +125,8 @@ const PostForm = () => {
       setImageUrl("");
       setDate("");
       setAddToManual(false);
+      setCustomTags(""); // Reset custom tags
+      setSelectedTags([]); // Reset selected tags
       alert("Post created/updated successfully");
       navigate("/");
     } catch (err) {
@@ -113,11 +136,20 @@ const PostForm = () => {
   };
 
   const handleTagChange = (e) => {
-    setSelectedTag(e.target.value);
+    const value = e.target.value;
+    setSelectedTags((prevTags) =>
+      prevTags.includes(value)
+        ? prevTags.filter((tag) => tag !== value)
+        : [...prevTags, value]
+    );
   };
 
   const handleCheckboxChange = (e) => {
     setAddToManual(e.target.checked);
+  };
+
+  const handleCustomTagsChange = (e) => {
+    setCustomTags(e.target.value);
   };
 
   return (
@@ -149,19 +181,35 @@ const PostForm = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="tag">Tag</label>
-          <select
-            id="tag"
-            className="form-control"
-            value={selectedTag}
-            onChange={handleTagChange}
-          >
+          <label>Tags</label>
+          <div>
             {tagOptions.map((tag) => (
-              <option key={tag} value={tag}>
-                {tag}
-              </option>
+              <div key={tag} className="form-check">
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  id={tag}
+                  value={tag}
+                  checked={selectedTags.includes(tag)}
+                  onChange={handleTagChange}
+                />
+                <label className="form-check-label" htmlFor={tag}>
+                  {tag}
+                </label>
+              </div>
             ))}
-          </select>
+          </div>
+        </div>
+        <div className="form-group">
+          <label htmlFor="customTags">Custom Tags (comma separated)</label>
+          <input
+            type="text"
+            id="customTags"
+            className="form-control"
+            placeholder="Enter custom tags"
+            value={customTags}
+            onChange={handleCustomTagsChange}
+          />
         </div>
         <div className="form-group">
           <label htmlFor="date">Date</label>
@@ -199,8 +247,8 @@ const PostForm = () => {
         <button type="submit" className="submit-post_btn">
           {id ? "Update Post" : "Submit"}
         </button>
-        <br/>
-        <br/>
+        <br />
+        <br />
       </form>
     </div>
   );

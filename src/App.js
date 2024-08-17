@@ -16,11 +16,11 @@ function App() {
     <>
       <Router>
         <div className="App">
+          <div className="container overlay">
           <Navbar />
           <Routes>
-            <Route path="/" element={<Home />} /> {/* Home page at the root */}
+            <Route path="/" element={<Home />} />
             <Route path="/home" element={<TagList />} />{" "}
-            {/* Weblog shown at "/home" */}
             <Route path="/posts/:id" element={<PostDetail />} />
             <Route path="/login" element={<Login />} />
             <Route path="/tags/:tag" element={<PostList />} />
@@ -38,6 +38,7 @@ function App() {
           >
             Developed by: Yara
           </a>
+        </div>
         </div>
       </Router>
     </>

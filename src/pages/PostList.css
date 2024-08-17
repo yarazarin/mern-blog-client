@@ -1,7 +1,7 @@
 .post-list_container {
 }
 
-.tag-cards_container{
+.tag-cards_container {
   display: flex;
   position: relative;
   flex-direction: row;
@@ -10,6 +10,7 @@
   margin-top: 0px;
   right: 25px;
 }
+
 .container_postform {
   margin-top: 20px;
 }
@@ -29,8 +30,9 @@
   line-height: 1.5;
   height: 100px;
 }
+
 .welcome-title {
-  color: #333;
+  color: var(--dark-3); 
   font-weight: bold;
 }
 
@@ -46,7 +48,7 @@
   height: 100%;
   width: 100%;
   text-align: center;
-  background: #dde1e7 !important;
+  background: var(--platinum-2) !important; 
 }
 
 .post-card {
@@ -95,8 +97,8 @@
 }
 
 .post-list_header {
-  color: #888;
-  text-shadow: #ffffff 1px 1px 1px;
+  color: var(--french-gray); 
+  text-shadow: var(--white) 1px 1px 1px; 
   text-align: center;
   font-size: 1.5rem;
   font-weight: bold;
@@ -128,7 +130,7 @@
 .card-title {
   font-weight: bold;
   margin-bottom: 0.5rem;
-  font-size: .8rem;
+  font-size: 0.8rem;
   text-align: center;
   overflow: hidden;
   padding: 14px;
@@ -140,10 +142,11 @@
 }
 
 .card-text {
-  color: #666;
+  color: var(--dark-3); 
 }
-.card-text p{
-display:none;
+
+.card-text p {
+  display: none;
 }
 
 .truncate {
@@ -189,14 +192,14 @@ display:none;
 }
 
 .date-text {
-  color: #666;
+  color: var(--dark-3); 
   font-size: 0.8rem;
 }
 
 .card.post-card {
   cursor: pointer;
   transition: transform 0.2s;
-  background: #dde1e7 !important;
+  background: var(--platinum-2) !important; 
   border-radius: 20px !important;
   margin: 20px !important;
   box-shadow: -8px -8px 10px rgba(255, 255, 255, 0.762),
@@ -209,14 +212,15 @@ display:none;
 }
 
 .btn-search {
-  background: #dde1e7 !important;
+  background: var(--platinum-2) !important; 
   box-shadow: -8px -8px 10px rgba(255, 255, 255, 0.762),
     5px 5px 9px rgba(94, 104, 121, 0.563) !important;
 }
+
 .list-group {
-  background: #dde1e7 !important;
+  background: var(--platinum-2) !important; 
   box-shadow: -8px -8px 10px rgba(255, 255, 255, 0.762),
-    5px 5px 9px rgba(94, 104, 121, 0.563), inset 0 0 0 2px #ccc !important;
+    5px 5px 9px rgba(94, 104, 121, 0.563), inset 0 0 0 2px var(--french-gray) !important; 
   border-radius: 20px !important;
   margin: 20px !important;
   text-align: center;
@@ -224,17 +228,16 @@ display:none;
   margin-top: 0px !important;
   margin-bottom: 0px !important;
   align-items: center !important;
-  font-family: "vazir" !important;
+
 }
 
 .list-group-item {
   max-width: fit-content !important;
   font-size: 0.7rem !important;
   font-weight: bold !important;
-  font-family: "vazir" !important;
-  color: #666 !important;
+  color: var(--dark-3) !important; 
   border-radius: 20px !important;
-  background: #dde1e7 !important;
+  background: var(--platinum-2) !important; 
   box-shadow: -8px -8px 10px rgba(255, 255, 255, 0.762),
     5px 5px 9px rgba(94, 104, 121, 0.563) !important;
   margin: 5px !important;
@@ -281,7 +284,6 @@ display:none;
     top: 10px;
     overflow: hidden;
   }
-
 }
 
 @media (max-width: 768px) {

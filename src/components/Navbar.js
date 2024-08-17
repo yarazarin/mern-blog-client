@@ -3,6 +3,7 @@ import { Navbar, Nav } from "react-bootstrap";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Navbar.css";
+import yar from "../img/yar.png";
 
 const Navigation = () => {
   const [isAuth, setIsAuth] = useState(!!localStorage.getItem("token"));
@@ -90,7 +91,7 @@ const Navigation = () => {
   return (
     <Navbar bg="light" expand="lg" className="shadow-sm">
       <Navbar.Brand as={NavLink} to="/" className="font-weight-bold logo">
-        Yara Zarin
+        <img calassName="logo" src={yar} alt="Logo" />
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">

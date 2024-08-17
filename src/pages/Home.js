@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
-import ya from "../img/ya.png";
+import ya from "../img/yara.png";
 import "./Home.css";
 
 const Home = () => {
@@ -42,9 +42,12 @@ const Home = () => {
 
             <div className="about-container">
               <h2>About Me</h2>
-              <p className="pre-type">
-                {` I'm a proactive Full-Stack Web Developer specializing in the M.E.R.N stack with extensive experience in AWS deployment. With a background in diverse roles ranging from social media communications to warehouse management, I bring a unique blend of problem-solving skills and creativity to my work. Currently seeking opportunities full-stack development where I can leverage my expertise to create innovative web solutions and drive positive change. `}
-              </p>
+              <p
+                className="pre-type"
+                dangerouslySetInnerHTML={{
+                  __html: `I'm a proactive <b>Full-Stack</b> Web Developer specializing in the <b>M.E.R.N</b> stack with extensive experience in <b>AWS</b> deployment. With a background in diverse roles ranging from social media communications to warehouse management, I bring a unique blend of problem-solving skills and creativity to my work. Currently seeking opportunities full-stack development where I can leverage my expertise to create innovative web solutions and drive positive change.`,
+                }}
+              ></p>
             </div>
           </div>
         </div>
@@ -128,7 +131,9 @@ const Home = () => {
           </div>
 
           <div className="container_books-menu">
-            <h6 className="text-center h6_title h6_title-lastposts">last Posts</h6>
+            <h6 className="text-center h6_title h6_title-lastposts">
+              last Posts
+            </h6>
             <div className="books-menu">
               <div className="card-deck">
                 {latestPosts.map((post) => (

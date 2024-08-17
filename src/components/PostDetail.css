@@ -1,4 +1,4 @@
-.post-detail{
+.post-detail {
   margin-bottom: 0px;
   padding: 10px;
   text-align: justify;
@@ -6,35 +6,36 @@
   background-position: center;
   background-size: cover;
 }
+
 .post-content {
   line-height: 1.8;
 }
 
-.det-container{
+.det-container {
   position: relative;
   margin-top: 10px;
   margin-bottom: 10px;
   padding: 10px;
-  background-color: #fff;
+  background-color: var(--platinum);
   border-radius: 5px;
-  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
-  font-family: 'vazir';
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+  font-family:sans-serif;
   font-size: 1rem;
   font-weight: 300;
-  color: #333;
+  color: var(--dark);
   line-height: 1.5;
   text-align: justify;
-background-color: #dde1e7;
+  background-color: var(--platinum);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   direction: ltr;
 }
 
-.det-titel{
+.det-titel {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #333;
+  color: var(--dark);
   text-align: center;
   margin: 30px 0;
 }
@@ -43,14 +44,14 @@ background-color: #dde1e7;
   font-size: 0.9rem;
 }
 
-.det-img{
+.det-img {
   position: relative;
   width: 20% auto;
   border-radius: 5px;
-  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
 }
 
-.share-btn{
+.share-btn {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -58,14 +59,15 @@ background-color: #dde1e7;
   align-items: center;
   margin-top: 10px;
   margin-bottom: 10px;
-  font-size: .8rem;
-}
-.share-btn i{
-font-size: 1.5rem;
+  font-size: 0.8rem;
 }
 
-.share-btn:hover{
-  color: #23b4be;
+.share-btn i {
+  font-size: 1.5rem;
+}
+
+.share-btn:hover {
+  color: var(--moonstone);
 }
 
 .date_ {

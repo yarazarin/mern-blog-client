@@ -1,3 +1,4 @@
+/* src/components/PostForm.css */
 @font-face {
   font-family: "vazir";
   src: url("../fonts/Vazir-Regular.ttf") format("truetype");
@@ -25,12 +26,10 @@
 .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="vazir"]::before {
   content: "vazir";
   font-family: "vazir";
-
 }
 
 .ql-font-vazir {
   font-family: "vazir";
-  
 }
 
 .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="Times"]::before,
@@ -41,7 +40,6 @@
 
 .ql-font-Times {
   font-family: "Times";
-  
 }
 
 .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="dast"]::before,
@@ -70,7 +68,7 @@
   font-family: "nastaliq";
 }
 
-.ql-font-ava {
+.ql-font-nastaliq {
   font-family: "nastaliq";
 }
 
@@ -80,21 +78,23 @@
   width: 100%;
   padding: 3rem 3rem;
   border-radius: 10px;
+  background-color: var(--white);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.submit-post_btn{
+.submit-post_btn {
   margin: 0 auto;
   display: block;
   width: 100%;
-  padding: .2rem .2rem;
+  padding: 0.2rem 0.2rem;
   border-radius: 10px;
-  background-color: #007bff;
-  color: #fff;
+  background-color: var(--sky-blue);
+  color: var(--white);
   font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s;
 }
+
 .submit-post_btn:hover {
-  background-color: #0069d9;
+  background-color: var(--moonstone);
 }

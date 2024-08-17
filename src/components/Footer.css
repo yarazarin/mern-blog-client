@@ -23,14 +23,14 @@
   top: -7px;
   right: 15px;
   padding: 5px;
-  color: #000000;
+  color: var(--dark);
   text-decoration: none;
   font-size: 12px;
   rotate: 90deg;
 }
 
 .social-icons a:hover {
-  color: #23b4be;
+  color: var(--dark);
 }
 
 .footer_ p {
