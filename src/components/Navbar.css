@@ -1,21 +1,3 @@
-/* src/components/Navbar.css */
-:root {
-  --antiflash-white: #f0f0f1;
-  --columbia-blue: #cddce3;
-  --platinum: #dde0e6;
-  --seasalt: #f6f7f7;
-  --white: #fbfbfb;
-  --french-gray: #cfd4da;
-  --sky-blue: #80bed0;
-  --moonstone: #45b0bc;
-  --french-gray-2: #c7cacf;
-  --platinum-2: #e6e7e9;
-  --dark: #000000;
-  --dark-2: #343a40;
-  --dark-3: #495057;
-  --red: #c70039;
-}
-
 .navbar {
   display: flex;
   color: var(--french-gray-2) !important; 
@@ -33,7 +15,7 @@
   font-size: 1.1rem;
 }
 .logo {
-  position: absolute;
+  position: relative;
   display: flex;
   height: 3.5rem;
   width: auto; 
