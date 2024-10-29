@@ -96,6 +96,10 @@ const Navigation = () => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="ml-auto">
+          <Nav.Link as={NavLink} to="https://itisyara.com" className="mx-2">
+            <i class="fa-solid fa-share fa-flip-horizontal"></i>{" "}
+            <i className="fa-solid fa-solid fa-globe"></i>
+          </Nav.Link>
           <Nav.Link as={NavLink} to="/home" className="mx-2">
             <i className="fa-solid fa-book-open"></i>
           </Nav.Link>
