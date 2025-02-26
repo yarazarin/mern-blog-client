@@ -46,10 +46,10 @@ const PostForm = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-  const [selectedTags, setSelectedTags] = useState([]); // Updated state for multiple tags
-  const [customTags, setCustomTags] = useState(""); // New state for custom tags
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [customTags, setCustomTags] = useState("");
   const [date, setDate] = useState("");
-  const [addToManual, setAddToManual] = useState(false); // New state for checkbox
+  const [addToManual, setAddToManual] = useState(false);
   const [error, setError] = useState("");
   const { id } = useParams();
   const navigate = useNavigate();
@@ -72,7 +72,7 @@ const PostForm = () => {
           setImageUrl(response.data.imageUrl);
           setSelectedTags(response.data.tags || []);
           setDate(response.data.date ? response.data.date.split("T")[0] : "");
-          setAddToManual(response.data.addToManual || false); // Fetch checkbox value if editing
+          setAddToManual(response.data.addToManual || false);
         } catch (err) {
           console.error("Error fetching post data:", err);
           setError("Error fetching post data");
@@ -101,7 +101,7 @@ const PostForm = () => {
       title,
       content,
       imageUrl,
-      tags: allTags, // Include all tags
+      tags: allTags,
       date,
       addToManual,
     };
@@ -125,8 +125,8 @@ const PostForm = () => {
       setImageUrl("");
       setDate("");
       setAddToManual(false);
-      setCustomTags(""); // Reset custom tags
-      setSelectedTags([]); // Reset selected tags
+      setCustomTags("");
+      setSelectedTags([]);
       alert("Post created/updated successfully");
       navigate("/");
     } catch (err) {

@@ -98,3 +98,14 @@
 .submit-post_btn:hover {
   background-color: var(--moonstone);
 }
+
+.ql-container {
+  display: block;
+  min-height: 150px;
+  margin-bottom: 100px;
+}
+
+.ql-editor p {
+  font-size: 16px;
+  line-height: 1.5;
+}

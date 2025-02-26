@@ -12,6 +12,11 @@ import {
 } from "react-bootstrap";
 import "./PostDetail.css";
 
+const convertLinksToImages = (content) => {
+  const imageUrlRegex = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp))/gi;
+  return content.replace(imageUrlRegex, (url) => `<img src="${url}" alt="image" style="max-width:100%; height:auto;" />`);
+};
+
 const PostDetail = () => {
   const { id } = useParams();
   const [post, setPost] = useState(null);
@@ -69,7 +74,7 @@ const PostDetail = () => {
             <Col lg="8">
               <article>
                 <Button variant="" className="share-btn" onClick={handleShare}>
-                <i class="fa-solid fa-arrow-up-from-bracket"></i> share
+                  <i className="fa-solid fa-arrow-up-from-bracket"></i> share
                 </Button>
                 <h1 className="display-4 mb-4 det-titel">{post.title}</h1>
                 {/* Conditionally render the image */}
@@ -83,7 +88,7 @@ const PostDetail = () => {
                 )}
                 <div
                   className="post-content"
-                  dangerouslySetInnerHTML={{ __html: post.content }}
+                  dangerouslySetInnerHTML={{ __html: convertLinksToImages(post.content) }}
                 />
                 <hr className="my-5" />
                 <div className="author-info text-muted">
