@@ -1,5 +1,3 @@
-
-
 .tag-cards_container {
   display: flex;
   position: relative;
@@ -43,7 +41,7 @@
 .post-card {
   cursor: pointer;
   transition: transform 0.2s;
-  width: 140px;
+  width: 130px;
   max-height: 180px;
   min-height: 180px;
   overflow: hidden;
@@ -103,7 +101,8 @@
 }
 
 .h6_title-lastposts {
-  top: 20px;
+  position: absolute;
+  top: 40px !important; ;
 }
 
 .post-card:hover {
