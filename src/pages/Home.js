@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
-import y from "../img/y.png";
+import y from "../img/y.jpg";
 import "./Home.css";
 
 const Home = () => {
