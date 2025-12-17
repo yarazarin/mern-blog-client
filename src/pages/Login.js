@@ -4,10 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [code, setCode] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [codeSent, setCodeSent] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,6 +19,25 @@ const Login = () => {
     }
   }, [navigate]);
 
+  const handleSendCode = async () => {
+    setLoading(true);
+    setError('');
+
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/auth/send-code`,
+        { email }
+      );
+      console.log('Code sent:', response.data);
+      setCodeSent(true);
+    } catch (err) {
+      console.error('Error sending code:', err.response);
+      setError(err.response?.data?.message || 'Failed to send code');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -26,8 +46,8 @@ const Login = () => {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/auth/login`,
         {
-          username,
-          password
+          email,
+          code
         }
       );
       console.log('Login successful:', response.data);
@@ -54,33 +74,41 @@ const Login = () => {
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <input
-            type="text"
+            type="email"
             className="form-control"
-            placeholder="Username"
-            value={username}
+            placeholder="Email"
+            value={email}
             onChange={(e) => {
-              setUsername(e.target.value);
+              setEmail(e.target.value);
               setError('');
             }}
             required
           />
         </div>
-        <div className="form-group">
-          <input
-            type="password"
-            className="form-control"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-              setError('');
-            }}
-            required
-          />
-        </div>
-        <button type="submit" className="btn btn-primary" disabled={loading}>
-          {loading ? 'Logging in...' : 'Login'}
-        </button>
+        {!codeSent ? (
+          <button type="button" className="btn btn-secondary" onClick={handleSendCode} disabled={loading}>
+            {loading ? 'Sending...' : 'Send Code'}
+          </button>
+        ) : (
+          <>
+            <div className="form-group">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="6-digit Code"
+                value={code}
+                onChange={(e) => {
+                  setCode(e.target.value);
+                  setError('');
+                }}
+                required
+              />
+            </div>
+            <button type="submit" className="btn btn-primary" disabled={loading}>
+              {loading ? 'Logging in...' : 'Login'}
+            </button>
+          </>
+        )}
       </form>
       <button onClick={handleLogout} className="btn btn-secondary mt-3">
         Logout
