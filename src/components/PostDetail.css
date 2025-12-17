@@ -11,6 +11,16 @@
   line-height: 1.8;
 }
 
+/* Align and direction based on computed direction (works with dir="auto") */
+.post-content:dir(rtl) {
+  text-align: right;
+  direction: rtl;
+}
+.post-content:dir(ltr) {
+  text-align: left;
+  direction: ltr;
+}
+
 .det-container {
   position: relative;
   margin-top: 10px;
@@ -29,7 +39,7 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  direction: ltr;
+
 }
 
 .det-titel {

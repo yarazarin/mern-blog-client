@@ -99,6 +99,7 @@ const PostDetail = () => {
                                 )}
                                 <div
                                     className="post-content"
+                                    dir="auto"
                                     dangerouslySetInnerHTML={{
                                         __html: convertLinksToImages(
                                             post.content
