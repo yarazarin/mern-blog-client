@@ -37,19 +37,17 @@ const TagList = () => {
 
   return (
     <div className="tag-list">
-      <h2 className="blog_title text-center">Tags</h2>
-      <nav className="menu">
-        <ol className="tag-list-ol">
-          {tags.map((tag) => (
-            <li key={tag} className="menu-item">
-              <Link className="link-tags_counter" to={`/tags/${tag}`}>
-                {tag} <span className="tag-count"></span>
-              </Link>
-              ({postCounts[tag] || 0})
-            </li>
-          ))}
-        </ol>
-      </nav>
+      <h2 className="blog_title">Tags</h2>
+      <ul className="tag-grid">
+        {tags.map((tag) => (
+          <li key={tag} className="tag-item">
+            <Link className="tag-link" to={`/tags/${tag}`}>
+              <span className="tag-name">{tag}</span>
+              <span className="tag-count">({postCounts[tag] || 0})</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
