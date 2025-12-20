@@ -49,6 +49,11 @@ const TagList = () => {
       <h2 className="blog_title">Tags</h2>
 
       <HexGrid width={900} height={dynamicHeight} viewBox={`-6 -20 100 ${dynamicViewBoxHeight}`}>
+        <defs>
+          <clipPath id="hex-clip">
+            <polygon points="12,0 6,-10.392 -6,-10.392 -12,0 -6,10.392 6,10.392" />
+          </clipPath>
+        </defs>
         <Layout
           size={{ x: 12, y: 12 }}
           flat={true}
@@ -63,6 +68,15 @@ const TagList = () => {
               s={-(index % 5) - Math.floor(index / 5)}
               className="tag-hex"
             >
+              <image
+                x="-15"
+                y="-15"
+                width="50"
+                height="50"
+                href={`https://picsum.photos/20/20/?random=${index}`}
+                opacity="0.5"
+                clipPath="url(#hex-clip)"
+              />
               <foreignObject
                 x="-10"
                 y="-10"
