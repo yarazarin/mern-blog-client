@@ -90,6 +90,11 @@ const Login = () => {
             {loading ? 'Sending...' : 'Send Code'}
           </button>
         ) : (
+          <div className="alert alert-info mt-2">
+            Check the server console logs for the verification code.
+          </div>
+        )}
+        {codeSent && (
           <>
             <div className="form-group">
               <input
