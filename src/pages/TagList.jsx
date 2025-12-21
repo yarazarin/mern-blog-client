@@ -48,7 +48,7 @@ const TagList = () => {
     <div className="tag-list">
       <h2 className="blog_title">Tags</h2>
 
-      <HexGrid width={900} height={dynamicHeight} viewBox={`-6 -20 100 ${dynamicViewBoxHeight}`}>
+      <HexGrid width={600} height={dynamicHeight} viewBox={`-20 -20 100 ${dynamicViewBoxHeight}`}>
         <defs>
           <clipPath id="hex-clip">
             <polygon points="12,0 6,-10.392 -6,-10.392 -12,0 -6,10.392 6,10.392" />
@@ -63,9 +63,9 @@ const TagList = () => {
           {tags.map((tag, index) => (
             <Hexagon
               key={tag}
-              q={index % 5}
-              r={Math.floor(index / 5)}
-              s={-(index % 5) - Math.floor(index / 5)}
+              q={index % 4}
+              r={Math.floor(index / 4)}
+              s={-(index % 4) - Math.floor(index / 4)}
               className="tag-hex"
             >
               <image
