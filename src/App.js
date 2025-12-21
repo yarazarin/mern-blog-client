@@ -9,6 +9,7 @@ import PostDetail from "./components/PostDetail";
 import Home from "./pages/Home";
 import Footer from "./components/Footer";
 import TagList from "./pages/TagList";
+import AllPosts from "./pages/AllPosts";
 import "./App.css";
 
 function App() {
@@ -20,7 +21,8 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/home" element={<TagList />} />{" "}
+            <Route path="/home" element={<TagList />} />
+            <Route path="/all-posts" element={<AllPosts />} />
             <Route path="/posts/:id" element={<PostDetail />} />
             <Route path="/login" element={<Login />} />
             <Route path="/tags/:tag" element={<PostList />} />

@@ -106,6 +106,9 @@ const Navigation = () => {
           <Nav.Link as={NavLink} to="/" className="mx-2">
             <i className="fa-solid fa-house"></i>
           </Nav.Link>
+          <Nav.Link as={NavLink} to="/all-posts" className="mx-2">
+            <i className="fa-solid fa-th-large"></i>
+          </Nav.Link>
           {isAuth && (
             <>
               <Nav.Link as={NavLink} to="/new" className="mx-2">
