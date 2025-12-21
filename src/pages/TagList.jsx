@@ -48,7 +48,7 @@ const TagList = () => {
     <div className="tag-list">
       <h2 className="blog_title">Tags</h2>
 
-      <HexGrid width={600} height={dynamicHeight} viewBox={`-20 -20 100 ${dynamicViewBoxHeight}`}>
+      <HexGrid width={600} height={dynamicHeight} viewBox={`-20 -50 100 ${dynamicViewBoxHeight}`}>
         <defs>
           <clipPath id="hex-clip">
             <polygon points="12,0 6,-10.392 -6,-10.392 -12,0 -6,10.392 6,10.392" />
