@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import './Analytics.css'; // We'll create this
+import './Analytics.css';
 
 const Analytics = () => {
   const [views, setViews] = useState([]);
@@ -12,7 +12,7 @@ const Analytics = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  const fetchAnalytics = async () => {
+  const fetchAnalytics = useCallback(async () => {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
@@ -40,11 +40,11 @@ const Analytics = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [startDate, endDate]);
 
   useEffect(() => {
     fetchAnalytics();
-  }, [startDate, endDate]);
+  }, [fetchAnalytics]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
