@@ -6,7 +6,6 @@ const Analytics = () => {
   const [views, setViews] = useState([]);
   const [countries, setCountries] = useState([]);
   const [total, setTotal] = useState(0);
-  const [recent, setRecent] = useState([]);
   const [allVisits, setAllVisits] = useState([]);
   const [pagination, setPagination] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -26,17 +25,15 @@ const Analytics = () => {
         params: startDate && endDate ? { start: startDate, end: endDate } : {},
       };
 
-      const [viewsRes, countriesRes, totalRes, recentRes] = await Promise.all([
+      const [viewsRes, countriesRes, totalRes] = await Promise.all([
         axios.get(`${process.env.REACT_APP_API_URL}/analytics/views`, config),
         axios.get(`${process.env.REACT_APP_API_URL}/analytics/countries`, config),
         axios.get(`${process.env.REACT_APP_API_URL}/analytics/total`, config),
-        axios.get(`${process.env.REACT_APP_API_URL}/analytics/recent`, { ...config, params: { ...config.params, limit: 20 } }),
       ]);
 
       setViews(viewsRes.data);
       setCountries(countriesRes.data);
       setTotal(totalRes.data.total);
-      setRecent(recentRes.data);
     } catch (err) {
       setError('Failed to load analytics data');
       console.error(err);
@@ -133,32 +130,6 @@ const Analytics = () => {
         </div>
       </div>
 
-      <div className="recent-visits">
-        <h2>Recent Visits</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>IP</th>
-              <th>Country</th>
-              <th>City</th>
-              <th>Date</th>
-              <th>Page</th>
-            </tr>
-          </thead>
-          <tbody>
-            {recent.map((visit, index) => (
-              <tr key={index}>
-                <td>{visit.ip}</td>
-                <td>{visit.country}</td>
-                <td>{visit.city}</td>
-                <td>{new Date(visit.date).toLocaleString()}</td>
-                <td>{visit.path}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
       <div className="all-visits">
         <h2>All Visits ({pagination?.totalVisits || 0})</h2>
         <div className="pagination-controls">
@@ -176,34 +147,45 @@ const Analytics = () => {
             Next
           </button>
         </div>
-        <table>
-          <thead>
-            <tr>
-              <th>IP</th>
-              <th>Country</th>
-              <th>Region</th>
-              <th>City</th>
-              <th>Date</th>
-              <th>Page</th>
-              <th>User Agent</th>
-              <th>Referrer</th>
-            </tr>
-          </thead>
-          <tbody>
-            {allVisits.map((visit, index) => (
-              <tr key={`${visit.ip}-${visit.date}-${index}`}>
-                <td>{visit.ip}</td>
-                <td>{visit.country || 'Unknown'}</td>
-                <td>{visit.region || '-'}</td>
-                <td>{visit.city || '-'}</td>
-                <td>{new Date(visit.date).toLocaleString()}</td>
-                <td>{visit.path}</td>
-                <td className="user-agent">{visit.userAgent?.substring(0, 50) || '-'}{visit.userAgent?.length > 50 ? '...' : ''}</td>
-                <td className="referrer">{visit.referrer || '-'}</td>
+        <div className="table-container">
+          <table className="analytics-table">
+            <thead>
+              <tr>
+                <th>IP</th>
+                <th>Country</th>
+                <th>Region</th>
+                <th>City</th>
+                <th>Date</th>
+                <th>Page</th>
+                <th>Device</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {allVisits.map((visit, index) => {
+                const userAgent = visit.userAgent || '';
+                let device = '-';
+                if (userAgent.includes('Mobile') || userAgent.includes('Android') || userAgent.includes('iPhone')) {
+                  device = 'Mobile';
+                } else if (userAgent.includes('Tablet') || userAgent.includes('iPad')) {
+                  device = 'Tablet';
+                } else if (userAgent.includes('Windows') || userAgent.includes('Mac') || userAgent.includes('Linux')) {
+                  device = 'Desktop';
+                }
+                return (
+                  <tr key={`${visit.ip}-${visit.date}-${index}`}>
+                    <td>{visit.ip}</td>
+                    <td>{visit.country || 'Unknown'}</td>
+                    <td>{visit.region || '-'}</td>
+                    <td>{visit.city || '-'}</td>
+                    <td>{new Date(visit.date).toLocaleString()}</td>
+                    <td>{visit.path}</td>
+                    <td>{device}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
