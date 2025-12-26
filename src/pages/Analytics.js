@@ -13,6 +13,7 @@ const Analytics = () => {
   const [endDate, setEndDate] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [lastUpdate, setLastUpdate] = useState(new Date());
 
   const fetchAnalytics = useCallback(async () => {
     setLoading(true);
@@ -34,6 +35,7 @@ const Analytics = () => {
       setViews(viewsRes.data);
       setCountries(countriesRes.data);
       setTotal(totalRes.data.total);
+      setLastUpdate(new Date());
     } catch (err) {
       setError('Failed to load analytics data');
       console.error(err);
@@ -60,6 +62,14 @@ const Analytics = () => {
   useEffect(() => {
     fetchAnalytics();
     fetchAllVisits();
+
+    // Auto-refresh every 2 minutes
+    const interval = setInterval(() => {
+      fetchAnalytics();
+      fetchAllVisits();
+    }, 120000); // 2 minutes
+
+    return () => clearInterval(interval);
   }, [fetchAnalytics, fetchAllVisits]);
 
   if (loading) return <div>Loading...</div>;
@@ -68,6 +78,9 @@ const Analytics = () => {
   return (
     <div className="analytics">
       <h1>Blog Analytics</h1>
+      <div className="last-update">
+        Last updated: {lastUpdate.toLocaleTimeString()}
+      </div>
 
       <div className="filters">
         <label>
