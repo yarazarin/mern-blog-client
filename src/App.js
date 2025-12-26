@@ -10,6 +10,7 @@ import Home from "./pages/Home";
 import Footer from "./components/Footer";
 import TagList from "./pages/TagList";
 import AllPosts from "./pages/AllPosts";
+import Analytics from "./pages/Analytics";
 import "./App.css";
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
             <Route path="/" element={<PrivateRoute />}>
               <Route path="/new" element={<PostForm />} />
               <Route path="/edit/:id" element={<PostForm />} />
+              <Route path="/analytics" element={<Analytics />} />
             </Route>
           </Routes>
           <Footer />

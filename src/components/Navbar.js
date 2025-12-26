@@ -114,6 +114,9 @@ const Navigation = () => {
               <Nav.Link as={NavLink} to="/new" className="mx-2">
                 <i className="fa-solid fa-pen-nib"></i>
               </Nav.Link>
+              <Nav.Link as={NavLink} to="/analytics" className="mx-2">
+                <i className="fa-solid fa-chart-line"></i>
+              </Nav.Link>
               <Nav.Link as="button" onClick={handleLogout} className="mx-2">
                 <i className="fa-solid fa-right-from-bracket"></i>{" "}
               </Nav.Link>
