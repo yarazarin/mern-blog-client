@@ -21,7 +21,10 @@ const AllPosts = () => {
                 );
                 setPosts(response.data);
             } catch (error) {
-                console.error("Error fetching posts:", error);
+                console.error(
+                    "Error fetching posts:",
+                    error
+                );
             } finally {
                 setLoading(false);
             }
@@ -31,19 +34,28 @@ const AllPosts = () => {
     }, []);
 
     if (loading) {
-        return <div className="text-center mt-5">Loading posts...</div>;
+        return (
+            <div className="text-center mt-5">
+                Loading posts...
+            </div>
+        );
     }
 
     return (
         <div className="container all-posts-container">
-            <h2 className="text-center my-4 all-posts-title">All Posts</h2>
+            <h2 className="text-center my-4 all-posts-title">
+                All Posts
+            </h2>
             <div className="row">
                 {posts.map((post) => (
                     <div
                         key={post._id}
                         className="col-12 col-md-6 col-lg-4 mb-4"
                     >
-                        <Link to={`/posts/${post._id}`} className="text-decoration-none">
+                        <Link
+                            to={`/posts/${post._id}`}
+                            className="text-decoration-none"
+                        >
                             <div className="card h-100 shadow-sm all-posts-card">
                                 {post.imageUrl && (
                                     <img
@@ -55,14 +67,24 @@ const AllPosts = () => {
                                 <div
                                     className="card-body"
                                     style={{
-                                        direction: isPersian(post.content) ? "rtl" : "ltr",
+                                        direction:
+                                            isPersian(
+                                                post.content
+                                            )
+                                                ? "rtl"
+                                                : "ltr",
                                     }}
                                 >
                                     <h5 className="card-title all-posts-title">
                                         {post.title}
                                     </h5>
                                     <p className="card-text text-muted all-posts-date">
-                                        {format(parseISO(post.date), "yyyy-MM-dd")}
+                                        {format(
+                                            parseISO(
+                                                post.date
+                                            ),
+                                            "yyyy-MM-dd"
+                                        )}
                                     </p>
                                 </div>
                             </div>

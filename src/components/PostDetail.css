@@ -1,86 +1,85 @@
 .post-detail {
-  margin-bottom: 0px;
-  padding: 10px;
-  text-align: justify;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
+    margin-bottom: 0px;
+    padding: 10px;
+    text-align: justify;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
 
 .post-content {
-  line-height: 1.8;
+    line-height: 1.8;
 }
 
 /* Align and direction based on computed direction (works with dir="auto") */
 .post-content:dir(rtl) {
-  text-align: right;
-  direction: rtl;
+    text-align: right;
+    direction: rtl;
 }
 .post-content:dir(ltr) {
-  text-align: left;
-  direction: ltr;
+    text-align: left;
+    direction: ltr;
 }
 
 .det-container {
-  position: relative;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  padding: 10px;
-  background-color: var(--platinum);
-  border-radius: 5px;
-  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
-  font-family:sans-serif;
-  font-size: 1rem;
-  font-weight: 300;
-  color: var(--dark);
-  line-height: 1.5;
-  text-align: justify;
-  background-color: var(--platinum);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-
+    position: relative;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: var(--platinum);
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+    font-family: sans-serif;
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--dark);
+    line-height: 1.5;
+    text-align: justify;
+    background-color: var(--platinum);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
 
 .det-titel {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--dark);
-  text-align: center;
-  margin: 30px 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--dark);
+    text-align: center;
+    margin: 30px 0;
 }
 
 .author-info {
-  font-size: 0.9rem;
+    font-size: 0.9rem;
 }
 
 .det-img {
-  position: relative;
-  width: 20% auto;
-  border-radius: 5px;
-  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+    position: relative;
+    width: 20% auto;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
 }
 
 .share-btn {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  font-size: 0.8rem;
-  width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 0.8rem;
+    width: 100%;
 }
 
 .share-btn i {
-  font-size: 1.5rem;
+    font-size: 1.5rem;
 }
 
 .share-btn:hover {
-  color: var(--moonstone);
+    color: var(--moonstone);
 }
 
 .date_ {
-  font-family: 'Arial', sans-serif;
+    font-family: "Arial", sans-serif;
 }

@@ -148,10 +148,10 @@ const Home = () => {
                                     <li
                                         key={post._id}
                                         className="manual-post_li"
-                                            dir="auto"
-                                            onClick={() =>
-                                                (window.location.href = `/posts/${post._id}`)
-                                            }
+                                        dir="auto"
+                                        onClick={() =>
+                                            (window.location.href = `/posts/${post._id}`)
+                                        }
                                         style={{
                                             cursor: "pointer",
                                         }}
@@ -160,7 +160,10 @@ const Home = () => {
                                     </li>
                                 ))
                             ) : (
-                                <li className="manual-post_li" dir="auto">
+                                <li
+                                    className="manual-post_li"
+                                    dir="auto"
+                                >
                                     No highlighted posts
                                     available
                                 </li>

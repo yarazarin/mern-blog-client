@@ -1,127 +1,127 @@
 .navbar {
-  display: flex;
-  color: var(--french-gray-2) !important; 
-  border-radius: 20px;
-  background: var(--platinum) !important; 
-  box-shadow: -8px -8px 10px rgba(255, 255, 255, 0.762),
-    5px 5px 9px rgba(94, 104, 121, 0.563) !important;
-  min-width: 85%;
-  margin: auto;
-  padding-left: 100px;
-  padding-right: 100px;
-  margin-top: 0px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  font-size: 1.1rem;
+    display: flex;
+    color: var(--french-gray-2) !important;
+    border-radius: 20px;
+    background: var(--platinum) !important;
+    box-shadow: -8px -8px 10px rgba(255, 255, 255, 0.762),
+        5px 5px 9px rgba(94, 104, 121, 0.563) !important;
+    min-width: 85%;
+    margin: auto;
+    padding-left: 100px;
+    padding-right: 100px;
+    margin-top: 0px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    font-size: 1.1rem;
 }
 .logo {
-  position: absolute;
-  display: flex;
-  height: 3.5rem;
-  width: auto; 
-  max-width: 100%; 
-  margin-left: 15px;
-  margin-top: 0px;
-  left: 0;
-}
-
-.navbar-brand {
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: var(--dark) !important;
-}
-
-.nav-link {
-  color: var(--dark) !important;
-}
-
-.nav-link:hover {
-  color: var(--sky-blue) !important;
-}
-
-.search-container {
-  position: relative;
-}
-
-.search-results {
-  max-height: 100vh;
-  overflow-y: auto;
-  width: 100%;
-  z-index: 1000;
-}
-
-.list-group_search {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  border-radius: 4px;
-  z-index: 1000;
-  max-height: 300px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  background-color: transparent;
-}
-
-.search-results .list-group-item {
-  display: flex;
-  position: relative;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 20px;
-  padding-right: 20px;
-  padding-left: 20px;
-  margin-bottom: 5px;
-  background-color: var(--white);
-  border: 1px solid var(--platinum-2);
-  max-width: 100%;
-  max-height: 100px;
-  overflow: hidden;
-}
-
-.search-results .list-group-item:hover {
-  background-color: var(--seasalt);
-}
-
-.list-group-item a {
-  cursor: pointer;
-  text-decoration: none;
-  color: var(--dark);
-  font-size: 0.8rem;
-  font-family: sans-serif;
-  overflow: hidden;
-}
-
-.search-icon {
-  position: absolute;
-  top: 50%;
-  right: 115px;
-  transform: translateY(-60%);
-  font-size: 1.2rem;
-  color: var(--dark);
-  cursor: pointer;
-}
-
-@media (max-width: 993px) {
-  .navbar {
-    direction: rtl;
-    width: 100%;
-    padding-left: 25px;
-    padding-right: 20px;
-    border-radius: 0;
-    margin-top: 0;
-  }
-  .search-icon {
-    display: none;
-  }
-  .logo {
     position: absolute;
     display: flex;
     height: 3.5rem;
-    width: auto; 
-    max-width: 40%; 
+    width: auto;
+    max-width: 100%;
     margin-left: 15px;
     margin-top: 0px;
     left: 0;
-  }
+}
+
+.navbar-brand {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--dark) !important;
+}
+
+.nav-link {
+    color: var(--dark) !important;
+}
+
+.nav-link:hover {
+    color: var(--sky-blue) !important;
+}
+
+.search-container {
+    position: relative;
+}
+
+.search-results {
+    max-height: 100vh;
+    overflow-y: auto;
+    width: 100%;
+    z-index: 1000;
+}
+
+.list-group_search {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    border-radius: 4px;
+    z-index: 1000;
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: transparent;
+}
+
+.search-results .list-group-item {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-left: 20px;
+    margin-bottom: 5px;
+    background-color: var(--white);
+    border: 1px solid var(--platinum-2);
+    max-width: 100%;
+    max-height: 100px;
+    overflow: hidden;
+}
+
+.search-results .list-group-item:hover {
+    background-color: var(--seasalt);
+}
+
+.list-group-item a {
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--dark);
+    font-size: 0.8rem;
+    font-family: sans-serif;
+    overflow: hidden;
+}
+
+.search-icon {
+    position: absolute;
+    top: 50%;
+    right: 115px;
+    transform: translateY(-60%);
+    font-size: 1.2rem;
+    color: var(--dark);
+    cursor: pointer;
+}
+
+@media (max-width: 993px) {
+    .navbar {
+        direction: rtl;
+        width: 100%;
+        padding-left: 25px;
+        padding-right: 20px;
+        border-radius: 0;
+        margin-top: 0;
+    }
+    .search-icon {
+        display: none;
+    }
+    .logo {
+        position: absolute;
+        display: flex;
+        height: 3.5rem;
+        width: auto;
+        max-width: 40%;
+        margin-left: 15px;
+        margin-top: 0px;
+        left: 0;
+    }
 }

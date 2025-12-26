@@ -1,20 +1,22 @@
 html {
-  scroll-behavior: smooth;
-  font-family: sans-serif;
+    scroll-behavior: smooth;
+    font-family: sans-serif;
 }
 
 body {
-  font-family:sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    font-family: sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-h1, h2, h3{
-  word-spacing: -0.2rem;
+h1,
+h2,
+h3 {
+    word-spacing: -0.2rem;
 }

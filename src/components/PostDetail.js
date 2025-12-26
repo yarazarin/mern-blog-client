@@ -13,7 +13,8 @@ import {
 import "./PostDetail.css";
 
 const convertLinksToImages = (content) => {
-    const imageUrlRegex = /(https?:\/\/[^\s]+?\.(?:png|jpg|jpeg|gif|webp))/gi;
+    const imageUrlRegex =
+        /(https?:\/\/[^\s]+?\.(?:png|jpg|jpeg|gif|webp))/gi;
     return content.replace(
         imageUrlRegex,
         (url) =>
@@ -34,7 +35,10 @@ const PostDetail = () => {
                 );
                 setPost(response.data);
             } catch (error) {
-                console.error("Error fetching the post:", error);
+                console.error(
+                    "Error fetching the post:",
+                    error
+                );
                 setError("Error fetching the post");
             }
         };
@@ -50,9 +54,13 @@ const PostDetail = () => {
                     url: window.location.href,
                 })
                 .then(() => console.log("Successful share"))
-                .catch((error) => console.log("Error sharing", error));
+                .catch((error) =>
+                    console.log("Error sharing", error)
+                );
         } else {
-            alert("Share feature is not supported in your browser.");
+            alert(
+                "Share feature is not supported in your browser."
+            );
         }
     };
 
@@ -64,7 +72,9 @@ const PostDetail = () => {
         return (
             <Container className="text-center mt-5">
                 <Spinner animation="border" role="status">
-                    <span className="sr-only">Loading...</span>
+                    <span className="sr-only">
+                        Loading...
+                    </span>
                 </Spinner>
             </Container>
         );
@@ -112,25 +122,35 @@ const PostDetail = () => {
                                         {post.date
                                             ? new Date(
                                                   post.date
-                                              ).toLocaleDateString(undefined, {
-                                                  year: "numeric",
-                                                  month: "long",
-                                                  day: "numeric",
-                                              })
+                                              ).toLocaleDateString(
+                                                  undefined,
+                                                  {
+                                                      year: "numeric",
+                                                      month: "long",
+                                                      day: "numeric",
+                                                  }
+                                              )
                                             : "Date not available"}
                                     </p>
                                 </div>
                                 <div className="post-tags mt-3">
                                     {post.tags &&
-                                        post.tags.map((tag, index) => (
-                                            <Link
-                                                to={`/tags/${tag}`}
-                                                key={index}
-                                                className="badge badge-secondary mr-2"
-                                            >
-                                                {tag}
-                                            </Link>
-                                        ))}
+                                        post.tags.map(
+                                            (
+                                                tag,
+                                                index
+                                            ) => (
+                                                <Link
+                                                    to={`/tags/${tag}`}
+                                                    key={
+                                                        index
+                                                    }
+                                                    className="badge badge-secondary mr-2"
+                                                >
+                                                    {tag}
+                                                </Link>
+                                            )
+                                        )}
                                 </div>
                             </article>
                         </Col>
