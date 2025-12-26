@@ -83,6 +83,24 @@
   margin-bottom: 20px;
 }
 
+.pie-chart-container {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.pie-chart-container h2 {
+  margin-bottom: 20px;
+}
+
+.pie-chart-wrapper {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
