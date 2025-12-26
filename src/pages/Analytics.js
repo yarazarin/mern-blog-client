@@ -7,6 +7,9 @@ const Analytics = () => {
   const [countries, setCountries] = useState([]);
   const [total, setTotal] = useState(0);
   const [recent, setRecent] = useState([]);
+  const [allVisits, setAllVisits] = useState([]);
+  const [pagination, setPagination] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [loading, setLoading] = useState(true);
@@ -42,9 +45,25 @@ const Analytics = () => {
     }
   }, [startDate, endDate]);
 
+  const fetchAllVisits = useCallback(async (page = 1) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/analytics/all-visits`, {
+        headers: { Authorization: `Bearer ${token}` },
+        params: { page, limit: 50 }
+      });
+      setAllVisits(response.data.visits);
+      setPagination(response.data.pagination);
+      setCurrentPage(page);
+    } catch (err) {
+      console.error('Failed to load all visits:', err);
+    }
+  }, []);
+
   useEffect(() => {
     fetchAnalytics();
-  }, [fetchAnalytics]);
+    fetchAllVisits();
+  }, [fetchAnalytics, fetchAllVisits]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
@@ -134,6 +153,53 @@ const Analytics = () => {
                 <td>{visit.city}</td>
                 <td>{new Date(visit.date).toLocaleString()}</td>
                 <td>{visit.path}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="all-visits">
+        <h2>All Visits ({pagination?.totalVisits || 0})</h2>
+        <div className="pagination-controls">
+          <button
+            onClick={() => fetchAllVisits(currentPage - 1)}
+            disabled={!pagination?.hasPrev}
+          >
+            Previous
+          </button>
+          <span>Page {currentPage} of {pagination?.totalPages || 1}</span>
+          <button
+            onClick={() => fetchAllVisits(currentPage + 1)}
+            disabled={!pagination?.hasNext}
+          >
+            Next
+          </button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>IP</th>
+              <th>Country</th>
+              <th>Region</th>
+              <th>City</th>
+              <th>Date</th>
+              <th>Page</th>
+              <th>User Agent</th>
+              <th>Referrer</th>
+            </tr>
+          </thead>
+          <tbody>
+            {allVisits.map((visit, index) => (
+              <tr key={`${visit.ip}-${visit.date}-${index}`}>
+                <td>{visit.ip}</td>
+                <td>{visit.country || 'Unknown'}</td>
+                <td>{visit.region || '-'}</td>
+                <td>{visit.city || '-'}</td>
+                <td>{new Date(visit.date).toLocaleString()}</td>
+                <td>{visit.path}</td>
+                <td className="user-agent">{visit.userAgent?.substring(0, 50) || '-'}{visit.userAgent?.length > 50 ? '...' : ''}</td>
+                <td className="referrer">{visit.referrer || '-'}</td>
               </tr>
             ))}
           </tbody>
