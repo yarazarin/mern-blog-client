@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
-import y from "../img/y.jpg";
 import "./Home.css";
 
 const Home = () => {
@@ -42,15 +41,7 @@ const Home = () => {
             <div className="container">
                 <div className="row second_container">
                     <div className="col-md-9 about_auther">
-                        <div className="author-container">
-                            <img
-                                src={y}
-                                alt="Author"
-                                className="author-picture"
-                            />
-                            <div class="drop"></div>
-                            <div class="drop drop_2"></div>
-                        </div>
+
 
                         <div className="about-container">
                             <h2 className="about-title">
