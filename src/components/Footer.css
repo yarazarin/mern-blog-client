@@ -49,9 +49,9 @@
 
 .author-container {
     position: fixed;
-    scale: 1;
-    left: -50px;
-    bottom: -40px;
+    scale: .8;
+    left: -5px;
+    bottom: -48px;
     rotate: 90deg;
 }
 
