@@ -3,7 +3,7 @@
     position: fixed;
     display: flex;
     left: -150px;
-    bottom: 62%;
+    bottom: 0;
     background-color: transparent;
     text-align: left;
     padding: 0px 10px;
@@ -16,31 +16,48 @@
 .social-icons {
     display: flex;
     margin-bottom: 0;
-    left: 150px;
+    left: 190px;
     position: relative;
 }
 
 .social-icons a {
     position: relative;
-    top: -7px;
-    right: 15px;
+    top: -5px;
+    left: 100px;
     padding: 5px;
     color: var(--white);
     text-decoration: none;
     font-size: 12px;
     rotate: 90deg;
 }
-
+.toronto {
+    position: absolute;
+    width: 75px;
+    margin-right: 5px;
+    vertical-align: middle;
+    filter: invert(100%) sepia(100%) saturate(0%)
+        hue-rotate(0deg) brightness(200%) contrast(200%);
+    rotate: 90deg;
+    left: 89.7%;
+    top: -60%;
+}
 .social-icons a:hover {
     scale: 1.2;
     transition: 0.3s;
 }
 
 .footer_ p {
-    font-size: 0.9rem;
+    font-size: 0.7rem;
     position: relative;
     width: 450px;
     color: var(--white);
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    transform: rotate(90deg);
+    margin: 0;
+    padding: 0;
+    right: -100px;
+    bottom: 222px;
 }
 .clock {
     margin-left: 15px;
@@ -49,9 +66,9 @@
 
 .author-container {
     position: fixed;
-    scale: .8;
-    left: -5px;
-    bottom: -48px;
+    scale: 0.8;
+    left: 230px;
+    bottom: 50px;
     rotate: 90deg;
 }
 
@@ -205,43 +222,61 @@
     }
 }
 
-@media screen and (max-width: 1000px) {
-    .footer_ {
-        position: relative;
-        display: flex;
-        bottom: auto;
-        left: auto;
-        justify-content: center;
-        align-items: center;    
-        transform: rotate(0deg);
-    }
-    .social-icons {
-        position: relative;
-        bottom: 0;
-        background-color: transparent;
-        text-align: center;
-        left: 0;
-        padding: 0;
-        margin: 0 auto;
-        transform: rotate(0deg);
-        overflow-x: hidden;
-    }
-    .author-container {
-        display: none;
-    }
+/* Mobile Footer Styles */
+.mobile-footer {
+    width: 100%;
+    padding: 30px 20px;
+    text-align: center;
+    margin-top: auto;
+}
 
-    .social-icons a {
-        position: relative;
-        rotate: 0deg;
-    }
-    .footer_ p {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        font-size: 0.8rem;
+.mobile-social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-bottom: 20px;
+}
+
+.mobile-social-link {
+    color: #495057;
+    font-size: 24px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    padding: 12px;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+}
+
+.mobile-social-link:hover {
+    color: #007bff;
+    background-color: #e9ecef;
+}
+
+.mobile-copyright {
+    color: #6c757d;
+    font-size: 14px;
+    margin: 0;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.mobile-toronto {
+    width: 61.5px;
+    position: absolute;
+    right:25px;
+    bottom:20px;
+}
+
+@media screen and (max-width: 1200px) {
+    .footer_ {
+        display: none;
     }
 }
